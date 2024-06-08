@@ -1,6 +1,12 @@
 #!/bin/bash
 
+# Function to close Chromium browser
+close_chromium() {
+    killall chromium-browser
+}
+
 echo "Running pi-pages..."
+export DISPLAY=:0
 
 # List of URLs to visit
 urls=(
@@ -25,18 +31,34 @@ urls=(
 )
 
 # Time interval to switch between tabs (in seconds)
-interval=10
+interval=90
+
+# Trap interrupts and exit signal to close Chromium browser
+trap close_chromium INT TERM
+
+# Open Chromium browser initially
+chromium-browser &
+
+# Sleep for a while to allow Chromium browser to open
+sleep 15
 
 # Loop infinitely
 while true; do
     # Loop through each URL in the array
     for url in "${urls[@]}"; do
-        # Open Chromium browser with the specified website
-        # --disable-gpu is used to disable GPU hardware acceleration
-        # --window-size sets the initial window size
-        chromium-browser "$url" --window-size=1920,1080
-        
+        # Switch to Chromium window
+        wmctrl -a "Chromium"
+
+        # Open the URL in a new tab
+        xdotool key ctrl+t
+        sleep 5
+        xdotool type "$url"
+        xdotool key Return
+
         # Sleep for the specified interval
         sleep $interval
+
+        # Close the tab
+        xdotool key ctrl+w
     done
 done
