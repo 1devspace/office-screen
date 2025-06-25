@@ -78,25 +78,23 @@ jobs:
           echo "No Sphinx configuration found, creating basic docs..."
           
           # Create a simple index.html from README
-          cat > docs/index.html << 'EOF'
-          <!DOCTYPE html>
-          <html>
-          <head>
-              <title>Pi-Pages Documentation</title>
-              <meta charset="utf-8">
-              <style>
-                  body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
-                  pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }
-                  code { background: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
-              </style>
-          </head>
-          <body>
-              <h1>Pi-Pages Documentation</h1>
-              <p>Welcome to the Pi-Pages documentation.</p>
-              <p>For detailed information, please see the <a href="https://github.com/1devspace/office-screen">GitHub repository</a>.</p>
-          </body>
-          </html>
-          EOF
+          echo '<!DOCTYPE html>' > docs/index.html
+          echo '<html>' >> docs/index.html
+          echo '<head>' >> docs/index.html
+          echo '    <title>Pi-Pages Documentation</title>' >> docs/index.html
+          echo '    <meta charset="utf-8">' >> docs/index.html
+          echo '    <style>' >> docs/index.html
+          echo '        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }' >> docs/index.html
+          echo '        pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }' >> docs/index.html
+          echo '        code { background: #f4f4f4; padding: 2px 4px; border-radius: 3px; }' >> docs/index.html
+          echo '    </style>' >> docs/index.html
+          echo '</head>' >> docs/index.html
+          echo '<body>' >> docs/index.html
+          echo '    <h1>Pi-Pages Documentation</h1>' >> docs/index.html
+          echo '    <p>Welcome to the Pi-Pages documentation.</p>' >> docs/index.html
+          echo '    <p>For detailed information, please see the <a href="https://github.com/1devspace/office-screen">GitHub repository</a>.</p>' >> docs/index.html
+          echo '</body>' >> docs/index.html
+          echo '</html>' >> docs/index.html
           
           echo "✅ Created basic documentation"
         fi
