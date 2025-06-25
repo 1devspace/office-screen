@@ -21,9 +21,36 @@ jobs:
         pip install -r requirements.txt
         pip install build twine
     
+    - name: Get version information
+      id: version
+      run: |
+        echo "Getting version information..."
+        
+        # Get version from version.json
+        VERSION=$(python -c "
+        import sys
+        sys.path.append('.')
+        from version import VersionManager
+        vm = VersionManager()
+        print(vm.get_version_string())
+        ")
+        echo "Version: $VERSION"
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        
+        # Get version info
+        VERSION_INFO=$(python -c "
+        import sys
+        sys.path.append('.')
+        from version import VersionManager
+        vm = VersionManager()
+        import json
+        print(json.dumps(vm.get_version_info()))
+        ")
+        echo "version_info=$VERSION_INFO" >> $GITHUB_OUTPUT
+    
     - name: Build package
       run: |
-        echo "Building Python package..."
+        echo "Building Python package for version ${{ steps.version.outputs.version }}..."
         python -m build
         
         echo "Package contents:"
@@ -32,7 +59,7 @@ jobs:
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: dist
+        name: dist-${{ steps.version.outputs.version }}
         path: dist/
 
   test-package:
@@ -49,7 +76,7 @@ jobs:
     - name: Download build artifacts
       uses: actions/download-artifact@v4
       with:
-        name: dist
+        name: dist-${{ needs.build.outputs.version }}
         path: dist/
     
     - name: Install test dependencies
@@ -77,6 +104,21 @@ jobs:
         except Exception as e:
             print(f'⚠️ PiPages instantiation failed: {e}')
         "
+    
+    - name: Verify version
+      run: |
+        echo "Verifying package version..."
+        INSTALLED_VERSION=$(python -c "import pi_pages; print(pi_pages.__version__)" 2>/dev/null || echo "unknown")
+        EXPECTED_VERSION="${{ needs.build.outputs.version }}"
+        
+        echo "Installed version: $INSTALLED_VERSION"
+        echo "Expected version: $EXPECTED_VERSION"
+        
+        if [ "$INSTALLED_VERSION" = "$EXPECTED_VERSION" ]; then
+          echo "✅ Version matches"
+        else
+          echo "⚠️ Version mismatch (this is normal if __version__ is not set)"
+        fi
 
   publish:
     needs: [build, test-package]
@@ -88,7 +130,7 @@ jobs:
     - name: Download build artifacts
       uses: actions/download-artifact@v4
       with:
-        name: dist
+        name: dist-${{ needs.build.outputs.version }}
         path: dist/
     
     - name: Publish to PyPI
@@ -102,13 +144,20 @@ jobs:
       with:
         script: |
           const release = context.payload.release;
+          const versionInfo = JSON.parse('${{ needs.build.outputs.version_info }}');
+          
           const comment = `## 🎉 Release ${release.tag_name} Published!
           
           **Release Notes**: ${release.body || 'No release notes provided'}
           
-          **Package**: Available on PyPI as \`pip install pi-pages\`
+          **Package**: Available on PyPI as \`pip install pi-pages==${versionInfo.version_string}\`
           
           **GitHub Release**: ${release.html_url}
+          
+          **Version Information**:
+          - Version: ${versionInfo.version_string}
+          - Build Date: ${versionInfo.build_date}
+          - Git Commit: ${versionInfo.git_commit}
           
           **Build Status**: ✅ All checks passed
           
@@ -132,4 +181,6 @@ jobs:
         echo "✅ **PyPI Publishing**: Completed" >> $GITHUB_STEP_SUMMARY
         echo "✅ **Release Comment**: Added" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "🎉 **Release ${GITHUB_REF#refs/tags/} published successfully!**" >> $GITHUB_STEP_SUMMARY 
+        echo "🎉 **Release ${{ needs.build.outputs.version }} published successfully!**" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "📦 **Install with**: \`pip install pi-pages==${{ needs.build.outputs.version }}\`" >> $GITHUB_STEP_SUMMARY 

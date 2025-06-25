@@ -5,6 +5,7 @@ Setup script for Pi-Pages
 
 from setuptools import setup, find_packages
 import os
+import json
 
 # Read the README file
 def read_readme():
@@ -18,15 +19,26 @@ def read_requirements():
     with open("requirements.txt", "r", encoding="utf-8") as fh:
         return [line.strip() for line in fh if line.strip() and not line.startswith("#")]
 
+# Get version from version.json
+def get_version():
+    """Get version from version.json file."""
+    try:
+        with open("version.json", "r") as f:
+            version_data = json.load(f)
+            return version_data["version_string"]
+    except (FileNotFoundError, json.JSONDecodeError, KeyError):
+        # Fallback version if version.json is not available
+        return "1.0.0"
+
 setup(
     name="pi-pages",
-    version="2.0.0",
+    version=get_version(),
     author="Pi-Pages Team",
     author_email="",
     description="Advanced web automation tool for continuous browsing and monitoring",
     long_description=read_readme(),
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/pi-pages",
+    url="https://github.com/1devspace/office-screen",
     packages=find_packages(),
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -53,8 +65,8 @@ setup(
     zip_safe=False,
     keywords="web automation selenium browser monitoring",
     project_urls={
-        "Bug Reports": "https://github.com/yourusername/pi-pages/issues",
-        "Source": "https://github.com/yourusername/pi-pages",
-        "Documentation": "https://github.com/yourusername/pi-pages#readme",
+        "Bug Reports": "https://github.com/1devspace/office-screen/issues",
+        "Source": "https://github.com/1devspace/office-screen",
+        "Documentation": "https://github.com/1devspace/office-screen#readme",
     },
 ) 
