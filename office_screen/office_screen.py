@@ -417,7 +417,7 @@ class OfficeScreen:
 
     def run(self):
         """Main loop to cycle through URLs"""
-        self.logger.info("Starting pi-pages...")
+        self.logger.info("Starting office_screen...")
         
         # Set up browser
         if not self.setup_browser():
@@ -528,7 +528,7 @@ class OfficeScreen:
 def main():
     """Main entry point"""
     try:
-        office_screen = PiPages()
+        office_screen = OfficeScreen()
         office_screen.run()
     except KeyboardInterrupt:
         print("\nShutdown requested by user.")

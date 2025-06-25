@@ -1,5 +1,5 @@
 """
-Pi-Pages - Advanced Web Automation Tool
+office_screen - Advanced Web Automation Tool
 
 A robust, enterprise-grade web automation tool designed for continuous browsing 
 and monitoring of multiple websites.
@@ -19,7 +19,7 @@ def get_version():
         return "1.0.0"
 
 __version__ = get_version()
-__author__ = "Pi-Pages Team"
+__author__ = "office_screen Team"
 __description__ = "Advanced web automation tool for continuous browsing and monitoring"
 
 from .office_screen import OfficeScreen

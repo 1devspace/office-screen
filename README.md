@@ -4,7 +4,7 @@
 
 [📚 **View Full Documentation**](https://1devspace.github.io/office-screen/)
 
-# Pi-Pages: Advanced Web Automation Tool
+# office_screen: Advanced Web Automation Tool
 
 A robust, enterprise-grade web automation tool designed for continuous browsing and monitoring of multiple websites. Built with Python and Selenium, featuring advanced error handling, self-healing capabilities, and comprehensive monitoring.
 
@@ -56,7 +56,7 @@ A robust, enterprise-grade web automation tool designed for continuous browsing 
 1. **Clone the repository:**
 ```bash
 git clone <repository-url>
-cd pi-pages
+cd office_screen
 ```
 
 2. **Install Python dependencies:**
@@ -84,7 +84,7 @@ Download from [ChromeDriver website](https://chromedriver.chromium.org/)
 pip3 install .
 ```
 
-This will install pi-pages as a system command and make it available globally.
+This will install office_screen as a system command and make it available globally.
 
 ## ⚙️ Configuration
 
@@ -183,7 +183,7 @@ cp urls.json dev-urls.json
 # Edit dev-urls.json to include only development resources
 
 # Run with custom URL set
-python pi-pages.py --urls dev-urls.json
+python office_screen.py --urls dev-urls.json
 ```
 
 ### Filtering by Category
@@ -202,28 +202,28 @@ categories = office_screen.get_available_categories()
 
 ### Basic Usage
 ```bash
-python3 pi-pages.py
+python3 office_screen.py
 ```
 
 ### Direct Execution (if made executable)
 ```bash
-./pi-pages.py
+./office_screen.py
 ```
 
 ### Package Installation Usage
 ```bash
 # After installing with pip install .
-pi-pages
+office_screen
 ```
 
 ### With Custom Configuration
 ```bash
-python3 pi-pages.py config.json
+python3 office_screen.py config.json
 ```
 
 ### Running in Background
 ```bash
-nohup python3 pi-pages.py > output.log 2>&1 &
+nohup python3 office_screen.py > output.log 2>&1 &
 ```
 
 ### Stopping the Script
@@ -233,7 +233,7 @@ nohup python3 pi-pages.py > output.log 2>&1 &
 ## 📊 Monitoring & Logs
 
 ### Log Files
-- **`logs/pi-pages.log`**: Main log file with rotating backup
+- **`logs/office_screen.log`**: Main log file with rotating backup
 - **`logs/performance_metrics.json`**: Performance analytics data
 
 ### Performance Metrics
@@ -248,7 +248,7 @@ The tool tracks and saves:
 
 ### Example Log Output
 ```
-2024-01-15 10:30:00 - INFO - Starting pi-pages...
+2024-01-15 10:30:00 - INFO - Starting office_screen...
 2024-01-15 10:30:15 - INFO - Chrome browser started successfully
 2024-01-15 10:30:15 - INFO - Starting cycle 1 with 18 URLs...
 2024-01-15 10:30:15 - INFO - Visiting: https://example.com
@@ -291,8 +291,8 @@ self.logger.setLevel(logging.DEBUG)
 ## 📁 Project Structure
 
 ```
-pi-pages/
-├── pi-pages.py                 # Main Python script (executable)
+office_screen/
+├── office_screen.py                 # Main Python script (executable)
 ├── config.json                 # Configuration file
 ├── requirements.txt            # Python dependencies
 ├── setup.py                    # Package installation script
@@ -300,8 +300,8 @@ pi-pages/
 ├── CHANGELOG.md                # Version history
 ├── README.md                   # This file
 └── logs/                       # Log directory (created automatically)
-    ├── pi-pages.log           # Main log file
-    ├── pi-pages.log.1         # Backup log files
+    ├── office_screen.log           # Main log file
+    ├── office_screen.log.1         # Backup log files
     └── performance_metrics.json  # Performance data
 ```
 
@@ -341,7 +341,7 @@ This tool is for educational and legitimate automation purposes only. Users are 
 
 For issues and questions:
 1. Check the troubleshooting section
-2. Review the logs in `logs/pi-pages.log`
+2. Review the logs in `logs/office_screen.log`
 3. Open an issue on GitHub with detailed information
 
 ## How to Contribute

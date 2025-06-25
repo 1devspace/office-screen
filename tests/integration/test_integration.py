@@ -4,7 +4,7 @@ import pytest
 import json
 import tempfile
 import os
-from office_screen import OfficeScreen
+from office_screen.office_screen import OfficeScreen
 
 
 class TestOfficeScreenIntegration:
@@ -83,7 +83,7 @@ class TestOfficeScreenIntegration:
             config_file = f.name
 
         try:
-            office_screen = PiPages(config_file)
+            office_screen = OfficeScreen(config_file)
             
             # Test with real URLs
             assert office_screen.validate_url('https://httpbin.org/get') is True
@@ -129,7 +129,7 @@ class TestOfficeScreenIntegration:
                 config_file = config_f.name
 
             try:
-                office_screen = PiPages(config_file)
+                office_screen = OfficeScreen(config_file)
                 
                 # Test filtering by category
                 tech_urls = office_screen.get_urls_by_category('Tech News')
@@ -171,7 +171,7 @@ class TestOfficeScreenIntegration:
             config_file = f.name
 
         try:
-            office_screen = PiPages(config_file)
+            office_screen = OfficeScreen(config_file)
             
             # Test with low success rate (should increase interval)
             office_screen.successful_visits = 2

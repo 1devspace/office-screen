@@ -1,1 +1,1 @@
-# Integration tests for Pi-Pages 
+# Integration tests for office_screen 

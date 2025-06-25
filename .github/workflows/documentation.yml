@@ -81,7 +81,7 @@ jobs:
           echo '<!DOCTYPE html>' > docs/index.html
           echo '<html>' >> docs/index.html
           echo '<head>' >> docs/index.html
-          echo '    <title>Pi-Pages Documentation</title>' >> docs/index.html
+          echo '    <title>office_screen Documentation</title>' >> docs/index.html
           echo '    <meta charset="utf-8">' >> docs/index.html
           echo '    <style>' >> docs/index.html
           echo '        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }' >> docs/index.html
@@ -90,8 +90,8 @@ jobs:
           echo '    </style>' >> docs/index.html
           echo '</head>' >> docs/index.html
           echo '<body>' >> docs/index.html
-          echo '    <h1>Pi-Pages Documentation</h1>' >> docs/index.html
-          echo '    <p>Welcome to the Pi-Pages documentation.</p>' >> docs/index.html
+          echo '    <h1>office_screen Documentation</h1>' >> docs/index.html
+          echo '    <p>Welcome to the office_screen documentation.</p>' >> docs/index.html
           echo '    <p>For detailed information, please see the <a href="https://github.com/1devspace/office-screen">GitHub repository</a>.</p>' >> docs/index.html
           echo '</body>' >> docs/index.html
           echo '</html>' >> docs/index.html

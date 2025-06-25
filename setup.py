@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Setup script for Pi-Pages
+Setup script for office_screen
 """
 
 from setuptools import setup, find_packages
@@ -31,9 +31,9 @@ def get_version():
         return "1.0.0"
 
 setup(
-    name="pi-pages",
+    name="office_screen",
     version=get_version(),
-    author="Pi-Pages Team",
+    author="office_screen Team",
     author_email="",
     description="Advanced web automation tool for continuous browsing and monitoring",
     long_description=read_readme(),
@@ -58,7 +58,7 @@ setup(
     install_requires=read_requirements(),
     entry_points={
         "console_scripts": [
-            "office-screen=office_screen:main",
+            "office-screen=office_screen.office_screen:main",
         ],
     },
     include_package_data=True,

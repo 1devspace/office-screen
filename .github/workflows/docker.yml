@@ -31,7 +31,7 @@ jobs:
         context: .
         file: ./Dockerfile
         push: false
-        tags: pi-pages:test
+        tags: office_screen:test
         cache-from: type=gha
         cache-to: type=gha,mode=max
     
@@ -40,18 +40,18 @@ jobs:
         echo "Testing Docker image..."
         
         # Test basic image functionality
-        docker run --rm pi-pages:test python --version || echo "⚠️ Python version check failed (but continuing)"
+        docker run --rm office_screen:test python --version || echo "⚠️ Python version check failed (but continuing)"
         
         # Test if main file can be imported
-        docker run --rm pi-pages:test python -c "import sys; sys.path.append('.'); import office_screen; print('✅ Import test passed')" || echo "⚠️ Import test failed (but continuing)"
+        docker run --rm office_screen:test python -c "import sys; sys.path.append('.'); import office_screen; print('✅ Import test passed')" || echo "⚠️ Import test failed (but continuing)"
         
         # Test if config files exist
-        docker run --rm pi-pages:test ls -la config.json urls.json || echo "⚠️ Config files check failed (but continuing)"
+        docker run --rm office_screen:test ls -la config.json urls.json || echo "⚠️ Config files check failed (but continuing)"
     
     - name: Check image size
       run: |
         echo "Checking Docker image size..."
-        size=$(docker images pi-pages:test --format "table {{.Size}}" | tail -1)
+        size=$(docker images office_screen:test --format "table {{.Size}}" | tail -1)
         echo "Image size: $size"
         
         # Extract numeric size (remove 'MB', 'GB', etc.)

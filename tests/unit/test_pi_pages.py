@@ -5,7 +5,7 @@ import json
 import tempfile
 import os
 from unittest.mock import Mock, patch, MagicMock
-from office_screen import OfficeScreen
+from office_screen.office_screen import OfficeScreen
 
 
 class TestOfficeScreen:
@@ -13,7 +13,7 @@ class TestOfficeScreen:
 
     def test_init_with_default_config(self):
         """Test OfficeScreen initialization with default config."""
-        with patch('office_screen.OfficeScreen.load_config') as mock_load_config:
+        with patch('office_screen.office_screen.OfficeScreen.load_config') as mock_load_config:
             mock_load_config.return_value = {
                 'interval': 90,
                 'adaptive_interval': True,
@@ -27,10 +27,10 @@ class TestOfficeScreen:
                 'user_agents': []
             }
             
-            with patch('office_screen.OfficeScreen.load_urls') as mock_load_urls:
+            with patch('office_screen.office_screen.OfficeScreen.load_urls') as mock_load_urls:
                 mock_load_urls.return_value = []
                 
-                with patch('office_screen.OfficeScreen.setup_logging'):
+                with patch('office_screen.office_screen.OfficeScreen.setup_logging'):
                     office_screen = OfficeScreen()
                     
                     assert office_screen.interval == 90
@@ -53,8 +53,8 @@ class TestOfficeScreen:
             config_file = f.name
         
         try:
-            with patch('office_screen.OfficeScreen.setup_logging'):
-                with patch('office_screen.OfficeScreen.load_urls') as mock_load_urls:
+            with patch('office_screen.office_screen.OfficeScreen.setup_logging'):
+                with patch('office_screen.office_screen.OfficeScreen.load_urls') as mock_load_urls:
                     mock_load_urls.return_value = []
                     
                     office_screen = OfficeScreen(config_file)
@@ -81,12 +81,12 @@ class TestOfficeScreen:
             urls_file = f.name
         
         try:
-            with patch('office_screen.PiPages.setup_logging'):
-                with patch('office_screen.PiPages.load_config') as mock_load_config:
+            with patch('office_screen.office_screen.OfficeScreen.setup_logging'):
+                with patch('office_screen.office_screen.OfficeScreen.load_config') as mock_load_config:
                     mock_load_config.return_value = {}
                     
-                    pi_pages = PiPages()
-                    urls = pi_pages.load_urls(urls_file)
+                    office_screen = OfficeScreen()
+                    urls = office_screen.load_urls(urls_file)
                     
                     assert len(urls) == 2
                     assert 'https://example.com' in urls
@@ -96,42 +96,42 @@ class TestOfficeScreen:
 
     def test_validate_url(self):
         """Test URL validation."""
-        with patch('office_screen.PiPages.setup_logging'):
-            with patch('office_screen.PiPages.load_config') as mock_load_config:
+        with patch('office_screen.office_screen.OfficeScreen.setup_logging'):
+            with patch('office_screen.office_screen.OfficeScreen.load_config') as mock_load_config:
                 mock_load_config.return_value = {}
                 
-                with patch('office_screen.PiPages.load_urls') as mock_load_urls:
+                with patch('office_screen.office_screen.OfficeScreen.load_urls') as mock_load_urls:
                     mock_load_urls.return_value = []
                     
-                    pi_pages = PiPages()
+                    office_screen = OfficeScreen()
                     
                     # Valid URLs
-                    assert pi_pages.validate_url('https://example.com') is True
-                    assert pi_pages.validate_url('http://test.com') is True
+                    assert office_screen.validate_url('https://example.com') is True
+                    assert office_screen.validate_url('http://test.com') is True
                     
                     # Invalid URLs
-                    assert pi_pages.validate_url('not-a-url') is False
-                    assert pi_pages.validate_url('ftp://example.com') is False
+                    assert office_screen.validate_url('not-a-url') is False
+                    assert office_screen.validate_url('ftp://example.com') is False
 
     def test_adaptive_interval_adjustment(self):
         """Test adaptive interval adjustment based on success rate."""
-        with patch('office_screen.PiPages.setup_logging'):
-            with patch('office_screen.PiPages.load_config') as mock_load_config:
+        with patch('office_screen.office_screen.OfficeScreen.setup_logging'):
+            with patch('office_screen.office_screen.OfficeScreen.load_config') as mock_load_config:
                 mock_load_config.return_value = {
                     'adaptive_interval': True,
                     'min_interval': 30,
                     'max_interval': 180
                 }
                 
-                with patch('office_screen.PiPages.load_urls') as mock_load_urls:
+                with patch('office_screen.office_screen.OfficeScreen.load_urls') as mock_load_urls:
                     mock_load_urls.return_value = []
                     
-                    pi_pages = PiPages()
-                    pi_pages.interval = 90
-                    pi_pages.successful_visits = 5
-                    pi_pages.total_visits = 10  # 50% success rate
+                    office_screen = OfficeScreen()
+                    office_screen.interval = 90
+                    office_screen.successful_visits = 5
+                    office_screen.total_visits = 10  # 50% success rate
                     
-                    new_interval = pi_pages.adaptive_interval_adjustment()
+                    new_interval = office_screen.adaptive_interval_adjustment()
                     
                     # Should increase interval for low success rate
                     assert new_interval > 90
@@ -139,38 +139,38 @@ class TestOfficeScreen:
 
     def test_get_urls_by_category(self):
         """Test filtering URLs by category."""
-        with patch('office_screen.PiPages.setup_logging'):
-            with patch('office_screen.PiPages.load_config') as mock_load_config:
+        with patch('office_screen.office_screen.OfficeScreen.setup_logging'):
+            with patch('office_screen.office_screen.OfficeScreen.load_config') as mock_load_config:
                 mock_load_config.return_value = {}
                 
-                with patch('office_screen.PiPages.load_urls') as mock_load_urls:
+                with patch('office_screen.office_screen.OfficeScreen.load_urls') as mock_load_urls:
                     mock_load_urls.return_value = [
                         {'category': 'Tech', 'urls': ['https://tech1.com', 'https://tech2.com']},
                         {'category': 'News', 'urls': ['https://news1.com']}
                     ]
                     
-                    pi_pages = PiPages()
+                    office_screen = OfficeScreen()
                     
-                    tech_urls = pi_pages.get_urls_by_category('Tech')
+                    tech_urls = office_screen.get_urls_by_category('Tech')
                     assert len(tech_urls) == 2
                     assert 'https://tech1.com' in tech_urls
                     assert 'https://tech2.com' in tech_urls
 
     def test_get_available_categories(self):
         """Test getting available categories."""
-        with patch('office_screen.PiPages.setup_logging'):
-            with patch('office_screen.PiPages.load_config') as mock_load_config:
+        with patch('office_screen.office_screen.OfficeScreen.setup_logging'):
+            with patch('office_screen.office_screen.OfficeScreen.load_config') as mock_load_config:
                 mock_load_config.return_value = {}
                 
-                with patch('office_screen.PiPages.load_urls') as mock_load_urls:
+                with patch('office_screen.office_screen.OfficeScreen.load_urls') as mock_load_urls:
                     mock_load_urls.return_value = [
                         {'category': 'Tech', 'urls': []},
                         {'category': 'News', 'urls': []}
                     ]
                     
-                    pi_pages = PiPages()
+                    office_screen = OfficeScreen()
                     
-                    categories = pi_pages.get_available_categories()
+                    categories = office_screen.get_available_categories()
                     assert 'Tech' in categories
                     assert 'News' in categories
                     assert len(categories) == 2

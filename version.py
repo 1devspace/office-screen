@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Version management for Pi-Pages
+Version management for office_screen
 Handles semantic versioning and automatic version bumping
 """
 
@@ -12,7 +12,7 @@ from typing import Tuple, Optional
 
 
 class VersionManager:
-    """Manages semantic versioning for Pi-Pages"""
+    """Manages semantic versioning for office_screen"""
     
     def __init__(self, version_file="version.json"):
         self.version_file = version_file

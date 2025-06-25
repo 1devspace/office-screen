@@ -1,6 +1,6 @@
-# 📚 Pi-Pages Documentation
+# 📚 office_screen Documentation
 
-This directory contains the automatically generated documentation for the Pi-Pages project.
+This directory contains the automatically generated documentation for the office_screen project.
 
 ## 🚀 How to Access Documentation
 

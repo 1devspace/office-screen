@@ -49,4 +49,4 @@ ENV CHROME_OPTIONS="--no-sandbox --disable-dev-shm-usage --disable-gpu --headles
 EXPOSE 8000
 
 # Set default command
-CMD ["python", "pi-pages.py"] 
+CMD ["office-screen"] 
