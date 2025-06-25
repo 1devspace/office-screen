@@ -1,0 +1,50 @@
+[MASTER]
+# Use multiple processes to speed up Pylint
+jobs=0
+
+[MESSAGES CONTROL]
+# Disable specific warnings that are not critical for this project
+disable=
+    C0114,  # missing-module-docstring
+    C0103,  # invalid-name (module name)
+    C0303,  # trailing-whitespace
+    C0301,  # line-too-long
+    C0304,  # missing-final-newline
+    C0115,  # missing-class-docstring
+    R0902,  # too-many-instance-attributes
+    W0718,  # broad-exception-caught
+    W1514,  # unspecified-encoding
+    W1203,  # logging-fstring-interpolation
+    C0415,  # import-outside-toplevel
+    W0613,  # unused-argument
+    W0611,  # unused-import
+    W0104,  # pointless-statement
+    W0719,  # broad-exception-raised
+    W0702,  # bare-except
+    R0911,  # too-many-return-statements
+    R0912,  # too-many-branches
+    R0915,  # too-many-statements
+    R1705,  # no-else-return
+    C0411,  # wrong-import-order
+
+[REPORTS]
+# Set the output format
+output-format=text
+
+# Include a brief explanation of the error
+msg-template={path}:{line}: [{msg_id}({symbol}), {obj}] {msg}
+
+# Don't show the score
+score=no
+
+[FORMAT]
+# Maximum number of characters on a single line
+max-line-length=120
+
+[BASIC]
+# Regular expression which should only match function or class names
+good-names=i,j,k,ex,Run,_,id
+
+[MISCELLANEOUS]
+# List of note tags to take into consideration
+notes= 
