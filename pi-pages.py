@@ -236,6 +236,15 @@ class PiPages:
 
     def setup_browser(self):
         """Set up Chrome browser with appropriate options"""
+        try:
+            # Import webdriver-manager for automatic ChromeDriver management
+            from webdriver_manager.chrome import ChromeDriverManager
+            from selenium.webdriver.chrome.service import Service
+        except ImportError:
+            self.logger.warning("webdriver-manager not available, using system ChromeDriver")
+            ChromeDriverManager = None
+            Service = None
+        
         chrome_options = Options()
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
@@ -261,9 +270,17 @@ class PiPages:
             self.logger.info(f"Using proxy: {proxy}")
         
         try:
-            self.driver = webdriver.Chrome(options=chrome_options)
+            if ChromeDriverManager and Service:
+                # Use webdriver-manager for automatic ChromeDriver management
+                service = Service(ChromeDriverManager().install())
+                self.driver = webdriver.Chrome(service=service, options=chrome_options)
+                self.logger.info("Chrome browser started successfully with webdriver-manager")
+            else:
+                # Fallback to system ChromeDriver
+                self.driver = webdriver.Chrome(options=chrome_options)
+                self.logger.info("Chrome browser started successfully with system ChromeDriver")
+            
             self.driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-            self.logger.info("Chrome browser started successfully")
             return True
         except SessionNotCreatedException as e:
             self.logger.error(f"Failed to create browser session: {e}")
