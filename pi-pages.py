@@ -54,23 +54,88 @@ class PiPages:
         }
         
         self.urls = self.config.get('urls', [
+            # Tech News & Updates
+            "https://www.theverge.com/",
+            "https://venturebeat.com/",
+            "https://www.wired.com/",
+            "https://artificialintelligencenews.com/",
+            "https://www.technologyreview.com/",
+            "https://www.healthcareitnews.com/",
+            "https://www.medtechdive.com/",
+            "https://techcrunch.com/",
+            "https://entrackr.com/",
+            
+            # Developer Resources
+            "https://waydev.co/",
+            "https://gitclear.com/",
+            "https://grimoirelab.github.io/",
+            "https://redocly.com/",
+            "https://www.postman.com/",
+            "https://swagger.io/",
+            "https://huggingface.co/",
+            "https://paperswithcode.com/",
+            
+            # Tunisia & Regional Tech Resources
+            "https://gomycode.com/",
+            "https://www.tahawultech.com/",
+            "https://techpoint.africa/",
+            "https://www.techinafrica.com/",
+            "https://www.xe.com/currencyconverter/convert/?Amount=1&From=USD&To=TND",
+            "https://wise.com/us/currency-converter/usd-to-tnd-rate",
+            "https://startup.tn/",
+            "https://www.smarttunisia.tn/",
+            "https://www.tunisianstartups.com/",
+            "https://disrupt-africa.com/category/tunisia/",
+            "https://www.africabusinesscommunities.com/tech/",
+            "https://weetracker.com/category/tunisia/",
+            
+            # AI/ML Resources
+            "https://arxiv.org/list/cs.AI/recent",
+            "https://huggingface.co/papers",
+            "https://africacdc.org/",
+            
+            # Healthcare Tech
+            "https://healthtechmagazine.net/",
+            "https://www.bioworld.com/medtech",
+            "https://www.sciencedaily.com/news/matter_energy/technology/",
+            
+            # Team Productivity
+            "https://www.openproject.org/",
+            "https://taiga.io/",
+            "https://grafana.com/",
+            "https://www.metabase.com/",
+            
+            # Market & Finance
             "https://wise.com/us/currency-converter/usd-to-tnd-rate",
             "https://www.mortgagenewsdaily.com/mortgage-rates/mnd",
             "https://www.forbes.com/advisor/mortgages/mortgage-rates/",
             "https://finance.yahoo.com/most-active/",
             "https://finance.yahoo.com/quote/CNC/",
             "https://www.coindesk.com/price/bitcoin/",
+            "https://www.coingecko.com/en/",
+            "https://www.tradingview.com/",
+            
+            # Sports
             "https://www.livesport.com/soccer/world/",
             "https://live-tennis.eu/en/atp-live-scores",
-            "https://forecast.weather.gov/MapClick.php?CityName=Las+Vegas&state=NV&site=VEF&textField1=36.175&textField2=-115.136&e=0",
-            "https://www.weatherbug.com/weather-forecast/10-day-weather/tabarka-jundubah-ts",
+            
+            # Weather & Time
+            "https://www.meteoblue.com/en/weather/week/tunis_tunisia_2464470",
+            "https://www.timeanddate.com/weather/tunisia/tunis",
+            "https://weather.com/weather/today/l/36.82,10.17",
+            "https://weatherwidget.io/",
+            "https://everytimezone.com/",
+            "http://worldtimeapi.org/",
+            
+            # Additional Tech News
             "https://tldr.tech/",
             "https://news.ycombinator.com/",
-            "https://gov.nv.gov/Newsroom/PRs/news-releases/",
-            "https://cityofnorthlasvegas.org/newslist.php",
-            "https://www.lasvegasnevada.gov/Residents/Events#/",
-            "https://www.cityofnorthlasvegas.com/things-to-do/events-calendar",
+            
+            # GitHub & Development
             "https://github.com/trending",
+            
+            # Social Trends
+            "https://trends24.in/tunisia/",
             "https://trends24.in/united-states/"
         ])
         
