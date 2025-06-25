@@ -98,7 +98,6 @@ jobs:
     - name: Update CHANGELOG
       run: |
         echo "Updating CHANGELOG..."
-        
         # Generate changelog entry
         CHANGELOG_ENTRY=$(python -c "
         import sys
@@ -107,20 +106,15 @@ jobs:
         vm = VersionManager()
         print(vm.get_changelog_entry())
         ")
-        
         # Add to CHANGELOG.md
         if [ -f "CHANGELOG.md" ]; then
-          # Insert at the top after the header
-          sed -i "3i\\n$CHANGELOG_ENTRY" CHANGELOG.md
+          sed -i "3i\n$CHANGELOG_ENTRY" CHANGELOG.md
         else
-          # Create new CHANGELOG.md
-          cat > CHANGELOG.md << EOF
-          # Changelog
-          
-          All notable changes to this project will be documented in this file.
-          
-          $CHANGELOG_ENTRY
-          EOF
+          echo "# Changelog" > CHANGELOG.md
+          echo "" >> CHANGELOG.md
+          echo "All notable changes to this project will be documented in this file." >> CHANGELOG.md
+          echo "" >> CHANGELOG.md
+          echo "$CHANGELOG_ENTRY" >> CHANGELOG.md
         fi
     
     - name: Commit version changes
