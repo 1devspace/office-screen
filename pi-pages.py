@@ -53,91 +53,8 @@ class PiPages:
             'memory_usage': []
         }
         
-        self.urls = self.config.get('urls', [
-            # Tech News & Updates
-            "https://www.theverge.com/",
-            "https://venturebeat.com/",
-            "https://www.wired.com/",
-            "https://artificialintelligencenews.com/",
-            "https://www.technologyreview.com/",
-            "https://www.healthcareitnews.com/",
-            "https://www.medtechdive.com/",
-            "https://techcrunch.com/",
-            "https://entrackr.com/",
-            
-            # Developer Resources
-            "https://waydev.co/",
-            "https://gitclear.com/",
-            "https://grimoirelab.github.io/",
-            "https://redocly.com/",
-            "https://www.postman.com/",
-            "https://swagger.io/",
-            "https://huggingface.co/",
-            "https://paperswithcode.com/",
-            
-            # Tunisia & Regional Tech Resources
-            "https://gomycode.com/",
-            "https://www.tahawultech.com/",
-            "https://techpoint.africa/",
-            "https://www.techinafrica.com/",
-            "https://www.xe.com/currencyconverter/convert/?Amount=1&From=USD&To=TND",
-            "https://wise.com/us/currency-converter/usd-to-tnd-rate",
-            "https://startup.tn/",
-            "https://www.smarttunisia.tn/",
-            "https://www.tunisianstartups.com/",
-            "https://disrupt-africa.com/category/tunisia/",
-            "https://www.africabusinesscommunities.com/tech/",
-            "https://weetracker.com/category/tunisia/",
-            
-            # AI/ML Resources
-            "https://arxiv.org/list/cs.AI/recent",
-            "https://huggingface.co/papers",
-            "https://africacdc.org/",
-            
-            # Healthcare Tech
-            "https://healthtechmagazine.net/",
-            "https://www.bioworld.com/medtech",
-            "https://www.sciencedaily.com/news/matter_energy/technology/",
-            
-            # Team Productivity
-            "https://www.openproject.org/",
-            "https://taiga.io/",
-            "https://grafana.com/",
-            "https://www.metabase.com/",
-            
-            # Market & Finance
-            "https://wise.com/us/currency-converter/usd-to-tnd-rate",
-            "https://www.mortgagenewsdaily.com/mortgage-rates/mnd",
-            "https://www.forbes.com/advisor/mortgages/mortgage-rates/",
-            "https://finance.yahoo.com/most-active/",
-            "https://finance.yahoo.com/quote/CNC/",
-            "https://www.coindesk.com/price/bitcoin/",
-            "https://www.coingecko.com/en/",
-            "https://www.tradingview.com/",
-            
-            # Sports
-            "https://www.livesport.com/soccer/world/",
-            "https://live-tennis.eu/en/atp-live-scores",
-            
-            # Weather & Time
-            "https://www.meteoblue.com/en/weather/week/tunis_tunisia_2464470",
-            "https://www.timeanddate.com/weather/tunisia/tunis",
-            "https://weather.com/weather/today/l/36.82,10.17",
-            "https://weatherwidget.io/",
-            "https://everytimezone.com/",
-            "http://worldtimeapi.org/",
-            
-            # Additional Tech News
-            "https://tldr.tech/",
-            "https://news.ycombinator.com/",
-            
-            # GitHub & Development
-            "https://github.com/trending",
-            
-            # Social Trends
-            "https://trends24.in/tunisia/",
-            "https://trends24.in/united-states/"
-        ])
+        # Load URLs from file
+        self.urls = self.load_urls()
         
         self.interval = self.config.get('interval', 90)  # seconds
         self.adaptive_interval = self.config.get('adaptive_interval', True)
@@ -557,6 +474,56 @@ class PiPages:
         finally:
             self.save_performance_metrics()
             self.close_browser()
+
+    def load_urls(self, urls_file="urls.json"):
+        """Load URLs from JSON file"""
+        try:
+            if os.path.exists(urls_file):
+                with open(urls_file, 'r') as f:
+                    data = json.load(f)
+                    # Store categorized URLs for potential filtering
+                    self.categorized_urls = data.get('urls', [])
+                    # Flatten all URLs from all categories
+                    all_urls = []
+                    for category in data.get('urls', []):
+                        all_urls.extend(category.get('urls', []))
+                    self.logger.info(f"Loaded {len(all_urls)} URLs from {urls_file}")
+                    return all_urls
+            else:
+                self.logger.warning(f"URLs file {urls_file} not found, using default URLs")
+                return self.get_default_urls()
+        except Exception as e:
+            self.logger.error(f"Failed to load URLs from {urls_file}: {e}. Using default URLs.")
+            return self.get_default_urls()
+
+    def get_default_urls(self):
+        """Get default URLs as fallback"""
+        return [
+            "https://news.ycombinator.com/",
+            "https://github.com/trending",
+            "https://tldr.tech/",
+            "https://www.theverge.com/",
+            "https://techcrunch.com/"
+        ]
+
+    def get_urls_by_category(self, category_name=None):
+        """Get URLs filtered by category"""
+        if not hasattr(self, 'categorized_urls'):
+            return self.urls
+        
+        if category_name:
+            for category in self.categorized_urls:
+                if category.get('category', '').lower() == category_name.lower():
+                    return category.get('urls', [])
+            return []
+        else:
+            return self.categorized_urls
+
+    def get_available_categories(self):
+        """Get list of available categories"""
+        if hasattr(self, 'categorized_urls'):
+            return [cat.get('category', '') for cat in self.categorized_urls]
+        return []
 
 def main():
     """Main entry point"""

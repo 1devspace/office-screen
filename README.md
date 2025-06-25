@@ -82,23 +82,37 @@ This will install pi-pages as a system command and make it available globally.
 
 ## ⚙️ Configuration
 
-The tool uses a JSON configuration file (`config.json`) for easy customization:
+The tool uses JSON configuration files for easy customization:
 
-### Basic Configuration
+### URLs Configuration (`urls.json`)
+
+The application loads URLs from `urls.json` file, organized by categories:
+
 ```json
 {
-  "interval": 90,
-  "adaptive_interval": true,
-  "min_interval": 30,
-  "max_interval": 180,
-  "max_retries": 3,
-  "max_browser_restarts": 5,
-  "memory_check_interval": 300,
-  "max_memory_usage": 80
+  "urls": [
+    {
+      "category": "Tech News & Updates",
+      "urls": [
+        "https://www.theverge.com/",
+        "https://techcrunch.com/",
+        "https://www.wired.com/"
+      ]
+    },
+    {
+      "category": "Developer Resources",
+      "urls": [
+        "https://github.com/trending",
+        "https://stackoverflow.com/",
+        "https://dev.to/"
+      ]
+    }
+  ]
 }
 ```
 
-### Advanced Configuration
+### Application Configuration (`config.json`)
+
 ```json
 {
   "interval": 90,
@@ -109,17 +123,9 @@ The tool uses a JSON configuration file (`config.json`) for easy customization:
   "max_browser_restarts": 5,
   "memory_check_interval": 300,
   "max_memory_usage": 80,
-  "proxies": [
-    "http://proxy1.example.com:8080",
-    "http://proxy2.example.com:8080"
-  ],
+  "proxies": [],
   "user_agents": [
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-  ],
-  "urls": [
-    "https://example1.com",
-    "https://example2.com"
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
   ]
 }
 ```
@@ -138,7 +144,53 @@ The tool uses a JSON configuration file (`config.json`) for easy customization:
 | `max_memory_usage` | int | 80 | Maximum memory usage percentage |
 | `proxies` | array | [] | List of proxy servers for rotation |
 | `user_agents` | array | [] | List of user agents for rotation |
-| `urls` | array | [] | List of URLs to visit |
+
+## 📋 URL Categories
+
+The application includes URLs organized into the following categories:
+
+- **Tech News & Updates**: Latest technology news and updates
+- **Developer Resources**: Development tools, documentation, and resources  
+- **Tunisia & Regional Tech Resources**: Local and regional tech ecosystem
+- **AI/ML Resources**: Artificial intelligence and machine learning resources
+- **Healthcare Tech**: Healthcare technology news and resources
+- **Team Productivity**: Project management and productivity tools
+- **Market & Finance**: Financial markets, crypto, and economic data
+- **Sports**: Live sports scores and updates
+- **Weather & Time**: Weather forecasts and time zone information
+- **Social Trends**: Trending topics and social media trends
+
+## 🔧 Customization
+
+### Adding New URLs
+
+1. Edit `urls.json` to add new URLs in appropriate categories
+2. Restart the application to load new URLs
+
+### Creating Custom URL Sets
+
+You can create multiple URL files for different purposes:
+
+```bash
+# Create a development-focused URL set
+cp urls.json dev-urls.json
+# Edit dev-urls.json to include only development resources
+
+# Run with custom URL set
+python pi-pages.py --urls dev-urls.json
+```
+
+### Filtering by Category
+
+The application provides methods to filter URLs by category:
+
+```python
+# Get all URLs from a specific category
+tech_urls = pi_pages.get_urls_by_category("Tech News & Updates")
+
+# Get all available categories
+categories = pi_pages.get_available_categories()
+```
 
 ## 🚀 Usage
 
