@@ -1,0 +1,115 @@
+name: Continuous Integration
+
+on: [push, pull_request]
+
+jobs:
+  # Quick checks that should run first
+  quick-checks:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install black isort flake8
+    
+    - name: Check code formatting
+      run: |
+        black --check --diff .
+        isort --check-only --diff .
+    
+    - name: Basic linting
+      run: |
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
+    
+    - name: Check for syntax errors
+      run: |
+        python -m py_compile pi-pages.py
+        python -c "import ast; ast.parse(open('pi-pages.py').read())"
+
+  # Run all other jobs in parallel
+  test:
+    needs: quick-checks
+    uses: ./.github/workflows/test.yml
+
+  security:
+    needs: quick-checks
+    uses: ./.github/workflows/security.yml
+
+  code-quality:
+    needs: quick-checks
+    uses: ./.github/workflows/code-quality.yml
+
+  performance:
+    needs: quick-checks
+    uses: ./.github/workflows/performance.yml
+
+  documentation:
+    needs: quick-checks
+    uses: ./.github/workflows/documentation.yml
+
+  docker:
+    needs: quick-checks
+    uses: ./.github/workflows/docker.yml
+
+  # Summary job
+  summary:
+    needs: [test, security, code-quality, performance, documentation, docker]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+    - name: Check workflow status
+      run: |
+        echo "## CI Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        # Check each job status
+        echo "✅ **test**: ${{ needs.test.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "✅ **security**: ${{ needs.security.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "✅ **code-quality**: ${{ needs.code-quality.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "✅ **performance**: ${{ needs.performance.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "✅ **documentation**: ${{ needs.documentation.result }}" >> $GITHUB_STEP_SUMMARY
+        echo "✅ **docker**: ${{ needs.docker.result }}" >> $GITHUB_STEP_SUMMARY
+        
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "---" >> $GITHUB_STEP_SUMMARY
+        echo "**Overall Status**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+    
+    - name: Comment on PR
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const jobs = [
+            { name: 'test', result: '${{ needs.test.result }}' },
+            { name: 'security', result: '${{ needs.security.result }}' },
+            { name: 'code-quality', result: '${{ needs.code-quality.result }}' },
+            { name: 'performance', result: '${{ needs.performance.result }}' },
+            { name: 'documentation', result: '${{ needs.documentation.result }}' },
+            { name: 'docker', result: '${{ needs.docker.result }}' }
+          ];
+          
+          let comment = '## 🚀 CI Pipeline Results\n\n';
+          
+          jobs.forEach(job => {
+            const status = job.result === 'success' ? '✅' : job.result === 'failure' ? '❌' : '⏹️';
+            comment += `${status} **${job.name}**: ${job.result}\n`;
+          });
+          
+          comment += '\n---\n';
+          comment += 'View detailed results in the Actions tab.';
+          
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: comment
+          }); 

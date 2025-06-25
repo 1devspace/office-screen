@@ -1,0 +1,53 @@
+name: Docker Build and Test
+
+on: [push, pull_request]
+
+jobs:
+  docker-build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    
+    - name: Login to Docker Hub
+      if: github.event_name != 'pull_request'
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    
+    - name: Build and test Docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        file: ./Dockerfile
+        push: false
+        tags: pi-pages:test
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+    
+    - name: Test Docker image
+      run: |
+        docker run --rm pi-pages:test python -c "import pi_pages; print('Import successful')"
+        docker run --rm pi-pages:test python -m pytest tests/unit/ -v
+    
+    - name: Push to Docker Hub
+      if: github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/v')
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        file: ./Dockerfile
+        push: true
+        tags: |
+          ${{ secrets.DOCKERHUB_USERNAME }}/pi-pages:latest
+          ${{ secrets.DOCKERHUB_USERNAME }}/pi-pages:${{ github.ref_name }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+    
+    - name: Run containerized tests
+      run: |
+        docker run --rm -d --name pi-pages-test pi-pages:test sleep 30
+        docker exec pi-pages-test python -c "from pi_pages import PiPages; print('PiPages class loaded successfully')"
+        docker stop pi-pages-test 

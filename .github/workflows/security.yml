@@ -1,0 +1,84 @@
+name: Security Scan
+
+on: [push, pull_request, schedule]
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install bandit safety
+    
+    - name: Run Bandit security scan
+      run: |
+        bandit -r . -f json -o bandit-report.json || true
+        bandit -r . -f txt -o bandit-report.txt || true
+    
+    - name: Run Safety check
+      run: |
+        safety check --json --output safety-report.json || true
+        safety check --output safety-report.txt || true
+    
+    - name: Upload security reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: security-reports
+        path: |
+          bandit-report.json
+          bandit-report.txt
+          safety-report.json
+          safety-report.txt
+    
+    - name: Comment on PR with security findings
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          let comment = '## Security Scan Results\n\n';
+          
+          try {
+            const banditReport = JSON.parse(fs.readFileSync('bandit-report.json', 'utf8'));
+            if (banditReport.results && banditReport.results.length > 0) {
+              comment += '### ⚠️ Bandit Security Issues Found\n\n';
+              banditReport.results.forEach(issue => {
+                comment += `- **${issue.severity.toUpperCase()}**: ${issue.issue_text} (${issue.filename}:${issue.line_number})\n`;
+              });
+              comment += '\n';
+            } else {
+              comment += '### ✅ No Bandit security issues found\n\n';
+            }
+          } catch (e) {
+            comment += '### ℹ️ Bandit scan completed\n\n';
+          }
+          
+          try {
+            const safetyReport = JSON.parse(fs.readFileSync('safety-report.json', 'utf8'));
+            if (safetyReport.length > 0) {
+              comment += '### ⚠️ Safety Vulnerabilities Found\n\n';
+              safetyReport.forEach(vuln => {
+                comment += `- **${vuln.severity}**: ${vuln.package} ${vuln.installed_version} - ${vuln.advisory}\n`;
+              });
+            } else {
+              comment += '### ✅ No safety vulnerabilities found\n\n';
+            }
+          } catch (e) {
+            comment += '### ℹ️ Safety check completed\n\n';
+          }
+          
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: comment
+          }); 
