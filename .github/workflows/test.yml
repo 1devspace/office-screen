@@ -21,7 +21,7 @@ jobs:
     
     - name: Check syntax
       run: |
-        python -c "import ast; ast.parse(open('pi-pages.py').read()); print('✅ Syntax check passed')"
+        python -c "import ast; ast.parse(open('office_screen/office_screen.py').read()); print('✅ Syntax check passed')"
     
     - name: Check JSON files
       run: |
