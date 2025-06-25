@@ -91,7 +91,7 @@ jobs:
         fail_ci_if_error: false
     
     - name: Upload coverage report as artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: coverage-report-${{ matrix.python-version }}
         path: htmlcov/
@@ -125,7 +125,7 @@ jobs:
         safety check --output safety-report.txt || true
     
     - name: Upload security reports
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: security-reports
         path: |
@@ -223,7 +223,7 @@ jobs:
         echo "### Performance tests completed" >> performance-report.md
     
     - name: Upload performance artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: performance-results-${{ matrix.python-version }}
         path: |
@@ -256,7 +256,7 @@ jobs:
         sphinx-build -b html docs docs/_build/html || true
     
     - name: Upload documentation artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: documentation
         path: docs/_build/html/
