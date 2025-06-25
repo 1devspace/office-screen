@@ -108,7 +108,7 @@ jobs:
         ")
         # Add to CHANGELOG.md
         if [ -f "CHANGELOG.md" ]; then
-          sed -i "3i\n$CHANGELOG_ENTRY" CHANGELOG.md
+          awk -v entry="$CHANGELOG_ENTRY" 'NR==3{print ""; print entry} 1' CHANGELOG.md > CHANGELOG.tmp && mv CHANGELOG.tmp CHANGELOG.md
         else
           echo "# Changelog" > CHANGELOG.md
           echo "" >> CHANGELOG.md
