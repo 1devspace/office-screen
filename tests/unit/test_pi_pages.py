@@ -1,19 +1,19 @@
-"""Unit tests for PiPages class."""
+"""Unit tests for OfficeScreen class."""
 
 import pytest
 import json
 import tempfile
 import os
 from unittest.mock import Mock, patch, MagicMock
-from pi_pages import PiPages
+from office_screen import OfficeScreen
 
 
-class TestPiPages:
-    """Test cases for PiPages class."""
+class TestOfficeScreen:
+    """Test cases for OfficeScreen class."""
 
     def test_init_with_default_config(self):
-        """Test PiPages initialization with default config."""
-        with patch('pi_pages.PiPages.load_config') as mock_load_config:
+        """Test OfficeScreen initialization with default config."""
+        with patch('office_screen.OfficeScreen.load_config') as mock_load_config:
             mock_load_config.return_value = {
                 'interval': 90,
                 'adaptive_interval': True,
@@ -27,18 +27,18 @@ class TestPiPages:
                 'user_agents': []
             }
             
-            with patch('pi_pages.PiPages.load_urls') as mock_load_urls:
+            with patch('office_screen.OfficeScreen.load_urls') as mock_load_urls:
                 mock_load_urls.return_value = []
                 
-                with patch('pi_pages.PiPages.setup_logging'):
-                    pi_pages = PiPages()
+                with patch('office_screen.OfficeScreen.setup_logging'):
+                    office_screen = OfficeScreen()
                     
-                    assert pi_pages.interval == 90
-                    assert pi_pages.adaptive_interval is True
-                    assert pi_pages.min_interval == 30
-                    assert pi_pages.max_interval == 180
-                    assert pi_pages.max_retries == 3
-                    assert pi_pages.max_browser_restarts == 5
+                    assert office_screen.interval == 90
+                    assert office_screen.adaptive_interval is True
+                    assert office_screen.min_interval == 30
+                    assert office_screen.max_interval == 180
+                    assert office_screen.max_retries == 3
+                    assert office_screen.max_browser_restarts == 5
 
     def test_load_config_from_file(self):
         """Test loading configuration from JSON file."""
@@ -53,16 +53,16 @@ class TestPiPages:
             config_file = f.name
         
         try:
-            with patch('pi_pages.PiPages.setup_logging'):
-                with patch('pi_pages.PiPages.load_urls') as mock_load_urls:
+            with patch('office_screen.OfficeScreen.setup_logging'):
+                with patch('office_screen.OfficeScreen.load_urls') as mock_load_urls:
                     mock_load_urls.return_value = []
                     
-                    pi_pages = PiPages(config_file)
+                    office_screen = OfficeScreen(config_file)
                     
-                    assert pi_pages.interval == 120
-                    assert pi_pages.adaptive_interval is False
-                    assert pi_pages.min_interval == 60
-                    assert pi_pages.max_interval == 300
+                    assert office_screen.interval == 120
+                    assert office_screen.adaptive_interval is False
+                    assert office_screen.min_interval == 60
+                    assert office_screen.max_interval == 300
         finally:
             os.unlink(config_file)
 
@@ -81,8 +81,8 @@ class TestPiPages:
             urls_file = f.name
         
         try:
-            with patch('pi_pages.PiPages.setup_logging'):
-                with patch('pi_pages.PiPages.load_config') as mock_load_config:
+            with patch('office_screen.PiPages.setup_logging'):
+                with patch('office_screen.PiPages.load_config') as mock_load_config:
                     mock_load_config.return_value = {}
                     
                     pi_pages = PiPages()
@@ -96,11 +96,11 @@ class TestPiPages:
 
     def test_validate_url(self):
         """Test URL validation."""
-        with patch('pi_pages.PiPages.setup_logging'):
-            with patch('pi_pages.PiPages.load_config') as mock_load_config:
+        with patch('office_screen.PiPages.setup_logging'):
+            with patch('office_screen.PiPages.load_config') as mock_load_config:
                 mock_load_config.return_value = {}
                 
-                with patch('pi_pages.PiPages.load_urls') as mock_load_urls:
+                with patch('office_screen.PiPages.load_urls') as mock_load_urls:
                     mock_load_urls.return_value = []
                     
                     pi_pages = PiPages()
@@ -115,15 +115,15 @@ class TestPiPages:
 
     def test_adaptive_interval_adjustment(self):
         """Test adaptive interval adjustment based on success rate."""
-        with patch('pi_pages.PiPages.setup_logging'):
-            with patch('pi_pages.PiPages.load_config') as mock_load_config:
+        with patch('office_screen.PiPages.setup_logging'):
+            with patch('office_screen.PiPages.load_config') as mock_load_config:
                 mock_load_config.return_value = {
                     'adaptive_interval': True,
                     'min_interval': 30,
                     'max_interval': 180
                 }
                 
-                with patch('pi_pages.PiPages.load_urls') as mock_load_urls:
+                with patch('office_screen.PiPages.load_urls') as mock_load_urls:
                     mock_load_urls.return_value = []
                     
                     pi_pages = PiPages()
@@ -139,11 +139,11 @@ class TestPiPages:
 
     def test_get_urls_by_category(self):
         """Test filtering URLs by category."""
-        with patch('pi_pages.PiPages.setup_logging'):
-            with patch('pi_pages.PiPages.load_config') as mock_load_config:
+        with patch('office_screen.PiPages.setup_logging'):
+            with patch('office_screen.PiPages.load_config') as mock_load_config:
                 mock_load_config.return_value = {}
                 
-                with patch('pi_pages.PiPages.load_urls') as mock_load_urls:
+                with patch('office_screen.PiPages.load_urls') as mock_load_urls:
                     mock_load_urls.return_value = [
                         {'category': 'Tech', 'urls': ['https://tech1.com', 'https://tech2.com']},
                         {'category': 'News', 'urls': ['https://news1.com']}
@@ -158,11 +158,11 @@ class TestPiPages:
 
     def test_get_available_categories(self):
         """Test getting available categories."""
-        with patch('pi_pages.PiPages.setup_logging'):
-            with patch('pi_pages.PiPages.load_config') as mock_load_config:
+        with patch('office_screen.PiPages.setup_logging'):
+            with patch('office_screen.PiPages.load_config') as mock_load_config:
                 mock_load_config.return_value = {}
                 
-                with patch('pi_pages.PiPages.load_urls') as mock_load_urls:
+                with patch('office_screen.PiPages.load_urls') as mock_load_urls:
                     mock_load_urls.return_value = [
                         {'category': 'Tech', 'urls': []},
                         {'category': 'News', 'urls': []}

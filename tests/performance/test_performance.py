@@ -1,15 +1,15 @@
-"""Performance tests for PiPages class."""
+"""Performance tests for OfficeScreen class."""
 
 import pytest
 import time
 import json
 import tempfile
 import os
-from pi_pages import PiPages
+from office_screen import OfficeScreen
 
 
-class TestPiPagesPerformance:
-    """Performance test cases for PiPages class."""
+class TestOfficeScreenPerformance:
+    """Performance test cases for OfficeScreen class."""
 
     def test_config_loading_performance(self, benchmark):
         """Benchmark configuration loading performance."""
@@ -39,8 +39,8 @@ class TestPiPagesPerformance:
                     temp_config = temp_f.name
                 
                 try:
-                    pi_pages = PiPages(temp_config)
-                    return pi_pages
+                    office_screen = OfficeScreen(temp_config)
+                    return office_screen
                 finally:
                     os.unlink(temp_config)
 
@@ -59,7 +59,7 @@ class TestPiPagesPerformance:
             config_file = f.name
 
         try:
-            pi_pages = PiPages(config_file)
+            office_screen = OfficeScreen(config_file)
             
             test_urls = [
                 'https://example.com',
@@ -75,7 +75,7 @@ class TestPiPagesPerformance:
             ]
 
             def validate_urls():
-                return [pi_pages.validate_url(url) for url in test_urls]
+                return [office_screen.validate_url(url) for url in test_urls]
 
             # Benchmark URL validation
             results = benchmark(validate_urls)
@@ -111,10 +111,10 @@ class TestPiPagesPerformance:
                 config_file = config_f.name
 
             try:
-                pi_pages = PiPages(config_file)
+                office_screen = OfficeScreen(config_file)
 
                 def load_urls():
-                    return pi_pages.load_urls(urls_file)
+                    return office_screen.load_urls(urls_file)
 
                 # Benchmark URL loading
                 urls = benchmark(load_urls)
@@ -152,12 +152,12 @@ class TestPiPagesPerformance:
                 config_file = config_f.name
 
             try:
-                pi_pages = PiPages(config_file)
+                office_screen = OfficeScreen(config_file)
 
                 def filter_categories():
                     results = []
                     for i in range(50):
-                        urls = pi_pages.get_urls_by_category(f'Category {i}')
+                        urls = office_screen.get_urls_by_category(f'Category {i}')
                         results.append(len(urls))
                     return results
 
@@ -185,14 +185,14 @@ class TestPiPagesPerformance:
             config_file = f.name
 
         try:
-            pi_pages = PiPages(config_file)
+            office_screen = OfficeScreen(config_file)
 
             def calculate_adaptive_intervals():
                 results = []
                 for success_rate in range(0, 101, 10):
-                    pi_pages.successful_visits = success_rate
-                    pi_pages.total_visits = 100
-                    interval = pi_pages.adaptive_interval_adjustment()
+                    office_screen.successful_visits = success_rate
+                    office_screen.total_visits = 100
+                    interval = office_screen.adaptive_interval_adjustment()
                     results.append(interval)
                 return results
 
@@ -219,11 +219,11 @@ class TestPiPagesPerformance:
             process = psutil.Process()
             initial_memory = process.memory_info().rss
 
-            # Create multiple PiPages instances
+            # Create multiple OfficeScreen instances
             instances = []
             for i in range(100):
-                pi_pages = PiPages(config_file)
-                instances.append(pi_pages)
+                office_screen = OfficeScreen(config_file)
+                instances.append(office_screen)
 
             # Get memory usage after creating instances
             memory_after_creation = process.memory_info().rss

@@ -1,14 +1,14 @@
-"""Integration tests for PiPages class."""
+"""Integration tests for OfficeScreen class."""
 
 import pytest
 import json
 import tempfile
 import os
-from pi_pages import PiPages
+from office_screen import OfficeScreen
 
 
-class TestPiPagesIntegration:
-    """Integration test cases for PiPages class."""
+class TestOfficeScreenIntegration:
+    """Integration test cases for OfficeScreen class."""
 
     def test_full_configuration_loading(self):
         """Test complete configuration loading from files."""
@@ -49,23 +49,23 @@ class TestPiPagesIntegration:
             urls_file = urls_f.name
 
         try:
-            # Test PiPages initialization with custom files
-            pi_pages = PiPages(config_file)
+            # Test OfficeScreen initialization with custom files
+            office_screen = OfficeScreen(config_file)
             
             # Verify configuration was loaded correctly
-            assert pi_pages.interval == 60
-            assert pi_pages.adaptive_interval is False
-            assert pi_pages.min_interval == 30
-            assert pi_pages.max_interval == 120
-            assert pi_pages.max_retries == 2
-            assert pi_pages.max_browser_restarts == 3
-            assert pi_pages.memory_check_interval == 200
-            assert pi_pages.max_memory_usage == 70
-            assert len(pi_pages.proxies) == 2
-            assert len(pi_pages.config.get('user_agents', [])) == 2
+            assert office_screen.interval == 60
+            assert office_screen.adaptive_interval is False
+            assert office_screen.min_interval == 30
+            assert office_screen.max_interval == 120
+            assert office_screen.max_retries == 2
+            assert office_screen.max_browser_restarts == 3
+            assert office_screen.memory_check_interval == 200
+            assert office_screen.max_memory_usage == 70
+            assert len(office_screen.proxies) == 2
+            assert len(office_screen.config.get('user_agents', [])) == 2
 
             # Test URL loading
-            urls = pi_pages.load_urls(urls_file)
+            urls = office_screen.load_urls(urls_file)
             assert len(urls) == 2
             assert 'https://httpbin.org/get' in urls
             assert 'https://httpbin.org/status/200' in urls
@@ -83,17 +83,17 @@ class TestPiPagesIntegration:
             config_file = f.name
 
         try:
-            pi_pages = PiPages(config_file)
+            office_screen = PiPages(config_file)
             
             # Test with real URLs
-            assert pi_pages.validate_url('https://httpbin.org/get') is True
-            assert pi_pages.validate_url('https://httpbin.org/status/200') is True
-            assert pi_pages.validate_url('https://httpbin.org/status/404') is True
+            assert office_screen.validate_url('https://httpbin.org/get') is True
+            assert office_screen.validate_url('https://httpbin.org/status/200') is True
+            assert office_screen.validate_url('https://httpbin.org/status/404') is True
             
             # Test with invalid URLs
-            assert pi_pages.validate_url('not-a-valid-url') is False
-            assert pi_pages.validate_url('ftp://example.com') is False
-            assert pi_pages.validate_url('') is False
+            assert office_screen.validate_url('not-a-valid-url') is False
+            assert office_screen.validate_url('ftp://example.com') is False
+            assert office_screen.validate_url('') is False
 
         finally:
             os.unlink(config_file)
@@ -129,25 +129,25 @@ class TestPiPagesIntegration:
                 config_file = config_f.name
 
             try:
-                pi_pages = PiPages(config_file)
+                office_screen = PiPages(config_file)
                 
                 # Test filtering by category
-                tech_urls = pi_pages.get_urls_by_category('Tech News')
+                tech_urls = office_screen.get_urls_by_category('Tech News')
                 assert len(tech_urls) == 2
                 assert 'https://techcrunch.com' in tech_urls
                 assert 'https://theverge.com' in tech_urls
 
-                dev_urls = pi_pages.get_urls_by_category('Developer Tools')
+                dev_urls = office_screen.get_urls_by_category('Developer Tools')
                 assert len(dev_urls) == 2
                 assert 'https://github.com' in dev_urls
                 assert 'https://stackoverflow.com' in dev_urls
 
                 # Test non-existent category
-                empty_urls = pi_pages.get_urls_by_category('Non-existent')
+                empty_urls = office_screen.get_urls_by_category('Non-existent')
                 assert len(empty_urls) == 0
 
                 # Test getting all categories
-                categories = pi_pages.get_available_categories()
+                categories = office_screen.get_available_categories()
                 assert 'Tech News' in categories
                 assert 'Developer Tools' in categories
                 assert len(categories) == 2
@@ -171,26 +171,26 @@ class TestPiPagesIntegration:
             config_file = f.name
 
         try:
-            pi_pages = PiPages(config_file)
+            office_screen = PiPages(config_file)
             
             # Test with low success rate (should increase interval)
-            pi_pages.successful_visits = 2
-            pi_pages.total_visits = 10  # 20% success rate
-            new_interval = pi_pages.adaptive_interval_adjustment()
+            office_screen.successful_visits = 2
+            office_screen.total_visits = 10  # 20% success rate
+            new_interval = office_screen.adaptive_interval_adjustment()
             assert new_interval > 90
             assert new_interval <= 180
 
             # Test with high success rate (should decrease interval)
-            pi_pages.successful_visits = 18
-            pi_pages.total_visits = 20  # 90% success rate
-            new_interval = pi_pages.adaptive_interval_adjustment()
+            office_screen.successful_visits = 18
+            office_screen.total_visits = 20  # 90% success rate
+            new_interval = office_screen.adaptive_interval_adjustment()
             assert new_interval < 90
             assert new_interval >= 30
 
             # Test with medium success rate (should stay similar)
-            pi_pages.successful_visits = 7
-            pi_pages.total_visits = 10  # 70% success rate
-            new_interval = pi_pages.adaptive_interval_adjustment()
+            office_screen.successful_visits = 7
+            office_screen.total_visits = 10  # 70% success rate
+            new_interval = office_screen.adaptive_interval_adjustment()
             assert 70 <= new_interval <= 110  # Should be close to original
 
         finally:

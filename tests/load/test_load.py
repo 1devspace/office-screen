@@ -1,4 +1,4 @@
-"""Load tests for PiPages class."""
+"""Load tests for OfficeScreen class."""
 
 import pytest
 import json
@@ -7,11 +7,11 @@ import os
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from pi_pages import PiPages
+from office_screen import OfficeScreen
 
 
-class TestPiPagesLoad:
-    """Load test cases for PiPages class."""
+class TestOfficeScreenLoad:
+    """Load test cases for OfficeScreen class."""
 
     def test_concurrent_config_loading(self):
         """Test concurrent configuration loading."""
@@ -21,18 +21,18 @@ class TestPiPagesLoad:
             config_file = f.name
 
         try:
-            def create_pi_pages():
-                return PiPages(config_file)
+            def create_office_screen():
+                return OfficeScreen(config_file)
 
             # Test with 10 concurrent threads
             with ThreadPoolExecutor(max_workers=10) as executor:
-                futures = [executor.submit(create_pi_pages) for _ in range(10)]
+                futures = [executor.submit(create_office_screen) for _ in range(10)]
                 results = [future.result() for future in as_completed(futures)]
 
             # Verify all instances were created successfully
             assert len(results) == 10
-            for pi_pages in results:
-                assert pi_pages.interval == 90
+            for office_screen in results:
+                assert office_screen.interval == 90
 
         finally:
             os.unlink(config_file)
@@ -45,7 +45,7 @@ class TestPiPagesLoad:
             config_file = f.name
 
         try:
-            pi_pages = PiPages(config_file)
+            office_screen = OfficeScreen(config_file)
             
             test_urls = [
                 'https://example.com',
@@ -61,7 +61,7 @@ class TestPiPagesLoad:
             ] * 10  # Repeat 10 times for more load
 
             def validate_url(url):
-                return pi_pages.validate_url(url)
+                return office_screen.validate_url(url)
 
             # Test with 5 concurrent threads
             with ThreadPoolExecutor(max_workers=5) as executor:
@@ -101,11 +101,11 @@ class TestPiPagesLoad:
                 config_file = config_f.name
 
             try:
-                pi_pages = PiPages(config_file)
+                office_screen = OfficeScreen(config_file)
                 
                 # Load the large URL file
                 start_time = time.time()
-                urls = pi_pages.load_urls(urls_file)
+                urls = office_screen.load_urls(urls_file)
                 load_time = time.time() - start_time
 
                 # Verify results
@@ -144,10 +144,10 @@ class TestPiPagesLoad:
                 config_file = config_f.name
 
             try:
-                pi_pages = PiPages(config_file)
+                office_screen = OfficeScreen(config_file)
 
                 def filter_category(category_name):
-                    return pi_pages.get_urls_by_category(category_name)
+                    return office_screen.get_urls_by_category(category_name)
 
                 # Test with 20 concurrent threads
                 with ThreadPoolExecutor(max_workers=20) as executor:
@@ -184,20 +184,20 @@ class TestPiPagesLoad:
             process = psutil.Process()
             initial_memory = process.memory_info().rss
 
-            # Create many PiPages instances
+            # Create many OfficeScreen instances
             instances = []
             for i in range(1000):
-                pi_pages = PiPages(config_file)
-                instances.append(pi_pages)
+                office_screen = OfficeScreen(config_file)
+                instances.append(office_screen)
 
             # Get memory usage after creating instances
             memory_after_creation = process.memory_info().rss
             memory_increase = memory_after_creation - initial_memory
 
             # Perform operations on all instances
-            for pi_pages in instances:
-                pi_pages.validate_url('https://example.com')
-                pi_pages.adaptive_interval_adjustment()
+            for office_screen in instances:
+                office_screen.validate_url('https://example.com')
+                office_screen.adaptive_interval_adjustment()
 
             # Get memory usage after operations
             memory_after_operations = process.memory_info().rss
@@ -229,12 +229,12 @@ class TestPiPagesLoad:
             config_file = f.name
 
         try:
-            pi_pages = PiPages(config_file)
+            office_screen = OfficeScreen(config_file)
 
             def calculate_interval(success_rate):
-                pi_pages.successful_visits = success_rate
-                pi_pages.total_visits = 100
-                return pi_pages.adaptive_interval_adjustment()
+                office_screen.successful_visits = success_rate
+                office_screen.total_visits = 100
+                return office_screen.adaptive_interval_adjustment()
 
             # Test with 50 concurrent calculations
             with ThreadPoolExecutor(max_workers=10) as executor:
@@ -259,7 +259,7 @@ class TestPiPagesLoad:
             config_file = config_f.name
 
         try:
-            pi_pages = PiPages(config_file)
+            office_screen = OfficeScreen(config_file)
 
             def create_and_load_urls(urls_data):
                 with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
@@ -267,7 +267,7 @@ class TestPiPagesLoad:
                     urls_file = f.name
 
                 try:
-                    return pi_pages.load_urls(urls_file)
+                    return office_screen.load_urls(urls_file)
                 finally:
                     os.unlink(urls_file)
 

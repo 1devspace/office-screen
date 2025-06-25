@@ -23,7 +23,7 @@ from selenium.common.exceptions import (
     SessionNotCreatedException, NoSuchElementException
 )
 
-class PiPages:
+class OfficeScreen:
     def __init__(self, config_file="config.json"):
         self.driver = None
         self.max_retries = 3
@@ -113,7 +113,7 @@ class PiPages:
         
         # Set up rotating file handler
         file_handler = RotatingFileHandler(
-            'logs/pi-pages.log', 
+            'logs/office-screen.log', 
             maxBytes=10*1024*1024,  # 10MB
             backupCount=5
         )
@@ -225,7 +225,7 @@ class PiPages:
             
             # Quick check if URL is reachable
             headers = {
-                'User-Agent': random.choice(self.config.get('user_agents', ['Mozilla/5.0 (compatible; PiPages/1.0)']))
+                'User-Agent': random.choice(self.config.get('user_agents', ['Mozilla/5.0 (compatible; OfficeScreen/1.0)']))
             }
             response = requests.head(url, timeout=10, allow_redirects=True, headers=headers)
             return response.status_code < 400, f"HTTP {response.status_code}"
@@ -528,8 +528,8 @@ class PiPages:
 def main():
     """Main entry point"""
     try:
-        pi_pages = PiPages()
-        pi_pages.run()
+        office_screen = PiPages()
+        office_screen.run()
     except KeyboardInterrupt:
         print("\nShutdown requested by user.")
     except Exception as e:

@@ -1,3 +1,7 @@
+[![CI](https://github.com/1devspace/office-screen/actions/workflows/ci.yml/badge.svg)](https://github.com/1devspace/office-screen/actions/workflows/ci.yml)
+[![Docs](https://img.shields.io/badge/docs-online-blue)](https://1devspace.github.io/office-screen/)
+[![License](https://img.shields.io/github/license/1devspace/office-screen)](LICENSE)
+
 [📚 **View Full Documentation**](https://1devspace.github.io/office-screen/)
 
 # Pi-Pages: Advanced Web Automation Tool
@@ -188,10 +192,10 @@ The application provides methods to filter URLs by category:
 
 ```python
 # Get all URLs from a specific category
-tech_urls = pi_pages.get_urls_by_category("Tech News & Updates")
+tech_urls = office_screen.get_urls_by_category("Tech News & Updates")
 
 # Get all available categories
-categories = pi_pages.get_available_categories()
+categories = office_screen.get_available_categories()
 ```
 
 ## 🚀 Usage
@@ -339,6 +343,14 @@ For issues and questions:
 1. Check the troubleshooting section
 2. Review the logs in `logs/pi-pages.log`
 3. Open an issue on GitHub with detailed information
+
+## How to Contribute
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on contributing, code style, and pull requests.
+
+## License
+
+This project is licensed under the terms of the MIT License. See [LICENSE](LICENSE) for details.
 
 ---
 

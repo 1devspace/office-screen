@@ -58,7 +58,7 @@ setup(
     install_requires=read_requirements(),
     entry_points={
         "console_scripts": [
-            "pi-pages=pi_pages:main",
+            "office-screen=office_screen:main",
         ],
     },
     include_package_data=True,

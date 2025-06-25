@@ -25,7 +25,7 @@ jobs:
     
     - name: Check main file exists
       run: |
-        if [ -f "pi-pages.py" ]; then
+        if [ -f "office_screen/office_screen.py" ]; then
           echo "✅ Main file exists"
         else
           echo "❌ Main file missing"

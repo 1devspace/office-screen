@@ -43,7 +43,7 @@ jobs:
         docker run --rm pi-pages:test python --version || echo "⚠️ Python version check failed (but continuing)"
         
         # Test if main file can be imported
-        docker run --rm pi-pages:test python -c "import sys; sys.path.append('.'); import pi_pages; print('✅ Import test passed')" || echo "⚠️ Import test failed (but continuing)"
+        docker run --rm pi-pages:test python -c "import sys; sys.path.append('.'); import office_screen; print('✅ Import test passed')" || echo "⚠️ Import test failed (but continuing)"
         
         # Test if config files exist
         docker run --rm pi-pages:test ls -la config.json urls.json || echo "⚠️ Config files check failed (but continuing)"

@@ -22,6 +22,6 @@ __version__ = get_version()
 __author__ = "Pi-Pages Team"
 __description__ = "Advanced web automation tool for continuous browsing and monitoring"
 
-from .pi_pages import PiPages
+from .office_screen import OfficeScreen
 
-__all__ = ["PiPages"] 
+__all__ = ["OfficeScreen"] 
