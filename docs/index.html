@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pi-Pages Documentation</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            line-height: 1.6;
+            color: #333;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.2em;
+        }
+        .nav {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .nav h2 {
+            margin-top: 0;
+            color: #495057;
+        }
+        .nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        .nav li {
+            margin: 10px 0;
+        }
+        .nav a {
+            display: block;
+            padding: 12px 15px;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #495057;
+            transition: all 0.3s ease;
+        }
+        .nav a:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .section {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+        }
+        .section h2 {
+            color: #495057;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        pre { 
+            background: #f8f9fa; 
+            padding: 15px; 
+            border-radius: 6px; 
+            border-left: 4px solid #667eea;
+            overflow-x: auto;
+        }
+        code { 
+            background: #f1f3f4; 
+            padding: 2px 6px; 
+            border-radius: 4px; 
+            font-family: 'Monaco', 'Menlo', monospace;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #28a745;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🚀 Pi-Pages Documentation</h1>
+        <p>Advanced Web Automation Tool with Enterprise Features</p>
+    </div>
+
+    <div class="nav">
+        <h2>📚 Quick Navigation</h2>
+        <ul>
+            <li><a href="#getting-started">🚀 Getting Started</a></li>
+            <li><a href="#installation">📦 Installation</a></li>
+            <li><a href="#configuration">⚙️ Configuration</a></li>
+            <li><a href="#usage">💻 Usage</a></li>
+            <li><a href="#features">✨ Features</a></li>
+            <li><a href="#workflows">🔄 CI/CD Workflows</a></li>
+            <li><a href="#api">🔧 API Reference</a></li>
+            <li><a href="#troubleshooting">🔧 Troubleshooting</a></li>
+        </ul>
+    </div>
+
+    <div class="section" id="getting-started">
+        <h2>🚀 Getting Started</h2>
+        <p>Pi-Pages is an advanced web automation tool designed for enterprise use. It provides multi-site browsing, error handling, stealth capabilities, and performance monitoring.</p>
+        
+        <div class="warning">
+            <strong>⚠️ Note:</strong> This tool is designed for legitimate web automation purposes. Please ensure compliance with website terms of service and applicable laws.
+        </div>
+    </div>
+
+    <div class="section" id="installation">
+        <h2>📦 Installation</h2>
+        <h3>From PyPI (Recommended)</h3>
+        <pre><code>pip install pi-pages</code></pre>
+        
+        <h3>From Source</h3>
+        <pre><code>git clone https://github.com/1devspace/office-screen.git
+cd pi-pages
+pip install -e .</code></pre>
+        
+        <h3>Docker</h3>
+        <pre><code>docker pull pi-pages:latest
+docker run -it pi-pages:latest</code></pre>
+    </div>
+
+    <div class="section" id="configuration">
+        <h2>⚙️ Configuration</h2>
+        <p>Pi-Pages uses JSON configuration files for easy setup:</p>
+        
+        <h3>config.json</h3>
+        <pre><code>{
+  "interval": 90,
+  "adaptive_interval": true,
+  "min_interval": 30,
+  "max_interval": 180,
+  "max_retries": 3,
+  "max_browser_restarts": 5,
+  "memory_check_interval": 300,
+  "max_memory_usage": 80,
+  "proxies": [],
+  "user_agents": [
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+  ]
+}</code></pre>
+        
+        <h3>urls.json</h3>
+        <pre><code>{
+  "urls": [
+    {
+      "category": "tech",
+      "urls": [
+        "https://news.ycombinator.com/",
+        "https://github.com/trending"
+      ]
+    }
+  ]
+}</code></pre>
+    </div>
+
+    <div class="section" id="usage">
+        <h2>💻 Usage</h2>
+        <h3>Basic Usage</h3>
+        <pre><code>python pi-pages.py</code></pre>
+        
+        <h3>With Custom Config</h3>
+        <pre><code>python pi-pages.py --config my-config.json</code></pre>
+        
+        <h3>Docker Usage</h3>
+        <pre><code>docker run -v $(pwd)/config.json:/app/config.json pi-pages:latest</code></pre>
+    </div>
+
+    <div class="section" id="features">
+        <h2>✨ Features</h2>
+        <ul>
+            <li><strong>Multi-site Browsing</strong> <span class="badge">Core</span></li>
+            <li><strong>Error Handling & Recovery</strong> <span class="badge">Core</span></li>
+            <li><strong>Stealth Mode</strong> <span class="badge">Advanced</span></li>
+            <li><strong>Performance Monitoring</strong> <span class="badge">Enterprise</span></li>
+            <li><strong>Memory Management</strong> <span class="badge">Enterprise</span></li>
+            <li><strong>Proxy Support</strong> <span class="badge">Advanced</span></li>
+            <li><strong>Adaptive Intervals</strong> <span class="badge">Smart</span></li>
+            <li><strong>Logging & Metrics</strong> <span class="badge">Enterprise</span></li>
+        </ul>
+    </div>
+
+    <div class="section" id="workflows">
+        <h2>🔄 CI/CD Workflows</h2>
+        <p>This project includes comprehensive GitHub Actions workflows:</p>
+        <ul>
+            <li><strong>CI</strong> - Basic checks and validation</li>
+            <li><strong>Test</strong> - Unit and integration testing</li>
+            <li><strong>Code Quality</strong> - Linting and formatting checks</li>
+            <li><strong>Docker</strong> - Container building and testing</li>
+            <li><strong>Documentation</strong> - Documentation building (this page!)</li>
+            <li><strong>Release</strong> - Automated package publishing</li>
+        </ul>
+    </div>
+
+    <div class="section" id="api">
+        <h2>🔧 API Reference</h2>
+        <h3>PiPages Class</h3>
+        <pre><code>from pi_pages import PiPages
+
+# Initialize with custom config
+pi = PiPages(config_file="my-config.json")
+
+# Start the automation
+pi.run()</code></pre>
+        
+        <h3>Key Methods</h3>
+        <ul>
+            <li><code>setup_browser()</code> - Initialize browser</li>
+            <li><code>visit_url(url)</code> - Visit a specific URL</li>
+            <li><code>run()</code> - Start the main automation loop</li>
+            <li><code>save_performance_metrics()</code> - Save metrics to file</li>
+        </ul>
+    </div>
+
+    <div class="section" id="troubleshooting">
+        <h2>🔧 Troubleshooting</h2>
+        <h3>Common Issues</h3>
+        <ul>
+            <li><strong>Chrome not found:</strong> Install Chrome or ChromeDriver</li>
+            <li><strong>Memory issues:</strong> Reduce max_memory_usage in config</li>
+            <li><strong>Timeout errors:</strong> Increase interval or check network</li>
+            <li><strong>Proxy issues:</strong> Verify proxy configuration</li>
+        </ul>
+        
+        <h3>Logs</h3>
+        <p>Check the <code>logs/</code> directory for detailed logs and performance metrics.</p>
+    </div>
+
+    <div class="section">
+        <h2>📞 Support</h2>
+        <p>For issues, questions, or contributions:</p>
+        <ul>
+            <li><strong>GitHub Issues:</strong> <a href="https://github.com/1devspace/office-screen/issues">Report bugs or request features</a></li>
+            <li><strong>Repository:</strong> <a href="https://github.com/1devspace/office-screen">View source code</a></li>
+            <li><strong>PyPI:</strong> <a href="https://pypi.org/project/pi-pages/">Package page</a></li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <p style="text-align: center; color: #6c757d; font-size: 0.9em;">
+            📄 This documentation was automatically generated by the CI/CD pipeline.<br>
+            Last updated: <span id="last-updated"></span>
+        </p>
+    </div>
+
+    <script>
+        document.getElementById('last-updated').textContent = new Date().toLocaleDateString();
+    </script>
+</body>
+</html>
