@@ -1,124 +1,70 @@
 {
   "urls": [
     {
+      "category": "DCtrl Applications",
+      "urls": [
+        "https://dctrl.ai/",
+        "https://circle.seneca.center/",
+        "https://seneca.center/",
+        "https://dctrl.vipplayinc.ai/"
+      ]
+    },
+    {
+      "category": "Prometheus Monitoring",
+      "urls": [
+        "http://100.68.242.159:9090/targets?search=",
+        "http://100.68.6.31:9090/targets"
+      ]
+    },
+    {
+      "category": "Grafana Dashboards",
+      "urls": [
+        "https://grafana.dctrl.vipplayinc.ai/d/xtkCtBkiz/prometheus-blackbox-exporter?var-interval=10s&orgId=1&from=now-1h&to=now&timezone=browser&var-target=$__all&refresh=10s",
+        "https://grafana.dctrl.vipplayinc.ai/d/rYdddlPWk/vip-play?orgId=1&from=now-24h&to=now&timezone=browser&var-DS_PROMETHEUS=feyfysz3q93i8b&var-job=backend&var-nodename=ip-10-0-3-212&var-node=10.0.3.212:9100&var-diskdevices=%5Ba-z%5D%2B%7Cnvme%5B0-9%5D%2Bn%5B0-9%5D%2B%7Cmmcblk%5B0-9%5D%2B&refresh=1m"
+      ]
+    },
+    {
       "category": "Tech News & Updates",
       "urls": [
         "https://www.theverge.com/",
-        "https://venturebeat.com/",
-        "https://www.wired.com/",
-        "https://artificialintelligencenews.com/",
-        "https://www.technologyreview.com/",
-        "https://www.healthcareitnews.com/",
-        "https://www.medtechdive.com/",
         "https://techcrunch.com/",
-        "https://entrackr.com/"
+        "https://www.wired.com/",
+        "https://tldr.tech/",
+        "https://news.ycombinator.com/",
+        "https://www.technologyreview.com/",
+        "https://venturebeat.com/",
+        "https://arstechnica.com/",
+        "https://www.engadget.com/",
+        "https://www.cnet.com/"
       ]
     },
     {
       "category": "Developer Resources",
       "urls": [
-        "https://waydev.co/",
-        "https://gitclear.com/",
-        "https://grimoirelab.github.io/",
-        "https://redocly.com/",
-        "https://www.postman.com/",
-        "https://swagger.io/",
-        "https://huggingface.co/",
-        "https://paperswithcode.com/"
-      ]
-    },
-    {
-      "category": "Tunisia & Regional Tech Resources",
-      "urls": [
-        "https://gomycode.com/",
-        "https://www.tahawultech.com/",
-        "https://techpoint.africa/",
-        "https://www.techinafrica.com/",
-        "https://www.xe.com/currencyconverter/convert/?Amount=1&From=USD&To=TND",
-        "https://wise.com/us/currency-converter/usd-to-tnd-rate",
-        "https://startup.tn/",
-        "https://www.smarttunisia.tn/",
-        "https://www.tunisianstartups.com/",
-        "https://disrupt-africa.com/category/tunisia/",
-        "https://www.africabusinesscommunities.com/tech/",
-        "https://weetracker.com/category/tunisia/"
+        "https://github.com/trending",
+        "https://stackoverflow.com/",
+        "https://dev.to/",
+        "https://www.reddit.com/r/programming/",
+        "https://www.producthunt.com/",
+        "https://hackernoon.com/",
+        "https://www.freecodecamp.org/news/",
+        "https://css-tricks.com/",
+        "https://www.smashingmagazine.com/",
+        "https://www.infoq.com/"
       ]
     },
     {
       "category": "AI/ML Resources",
       "urls": [
         "https://arxiv.org/list/cs.AI/recent",
-        "https://huggingface.co/papers",
-        "https://africacdc.org/"
-      ]
-    },
-    {
-      "category": "Healthcare Tech",
-      "urls": [
-        "https://healthtechmagazine.net/",
-        "https://www.bioworld.com/medtech",
-        "https://www.sciencedaily.com/news/matter_energy/technology/"
-      ]
-    },
-    {
-      "category": "Team Productivity",
-      "urls": [
-        "https://www.openproject.org/",
-        "https://taiga.io/",
-        "https://grafana.com/",
-        "https://www.metabase.com/"
-      ]
-    },
-    {
-      "category": "Market & Finance",
-      "urls": [
-        "https://wise.com/us/currency-converter/usd-to-tnd-rate",
-        "https://www.mortgagenewsdaily.com/mortgage-rates/mnd",
-        "https://www.forbes.com/advisor/mortgages/mortgage-rates/",
-        "https://finance.yahoo.com/most-active/",
-        "https://finance.yahoo.com/quote/CNC/",
-        "https://www.coindesk.com/price/bitcoin/",
-        "https://www.coingecko.com/en/",
-        "https://www.tradingview.com/"
-      ]
-    },
-    {
-      "category": "Sports",
-      "urls": [
-        "https://www.livesport.com/soccer/world/",
-        "https://live-tennis.eu/en/atp-live-scores"
-      ]
-    },
-    {
-      "category": "Weather & Time",
-      "urls": [
-        "https://www.meteoblue.com/en/weather/week/tunis_tunisia_2464470",
-        "https://www.timeanddate.com/weather/tunisia/tunis",
-        "https://weather.com/weather/today/l/36.82,10.17",
-        "https://weatherwidget.io/",
-        "https://everytimezone.com/",
-        "http://worldtimeapi.org/"
-      ]
-    },
-    {
-      "category": "Additional Tech News",
-      "urls": [
-        "https://tldr.tech/",
-        "https://news.ycombinator.com/"
-      ]
-    },
-    {
-      "category": "GitHub & Development",
-      "urls": [
-        "https://github.com/trending"
-      ]
-    },
-    {
-      "category": "Social Trends",
-      "urls": [
-        "https://trends24.in/tunisia/",
-        "https://trends24.in/united-states/"
+        "https://huggingface.co/",
+        "https://paperswithcode.com/",
+        "https://www.kaggle.com/",
+        "https://openai.com/blog",
+        "https://www.deepmind.com/",
+        "https://www.anthropic.com/news"
       ]
     }
   ]
-} 
+}
+
