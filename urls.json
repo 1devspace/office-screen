@@ -15,55 +15,6 @@
         "http://100.68.242.159:9090/targets?search=",
         "http://100.68.6.31:9090/targets"
       ]
-    },
-    {
-      "category": "Grafana Dashboards",
-      "urls": [
-        "https://grafana.dctrl.vipplayinc.ai/d/xtkCtBkiz/prometheus-blackbox-exporter?var-interval=10s&orgId=1&from=now-1h&to=now&timezone=browser&var-target=$__all&refresh=10s",
-        "https://grafana.dctrl.vipplayinc.ai/d/rYdddlPWk/vip-play?orgId=1&from=now-24h&to=now&timezone=browser&var-DS_PROMETHEUS=feyfysz3q93i8b&var-job=backend&var-nodename=ip-10-0-3-212&var-node=10.0.3.212:9100&var-diskdevices=%5Ba-z%5D%2B%7Cnvme%5B0-9%5D%2Bn%5B0-9%5D%2B%7Cmmcblk%5B0-9%5D%2B&refresh=1m"
-      ]
-    },
-    {
-      "category": "Tech News & Updates",
-      "urls": [
-        "https://www.theverge.com/",
-        "https://techcrunch.com/",
-        "https://www.wired.com/",
-        "https://tldr.tech/",
-        "https://news.ycombinator.com/",
-        "https://www.technologyreview.com/",
-        "https://venturebeat.com/",
-        "https://arstechnica.com/",
-        "https://www.engadget.com/",
-        "https://www.cnet.com/"
-      ]
-    },
-    {
-      "category": "Developer Resources",
-      "urls": [
-        "https://github.com/trending",
-        "https://stackoverflow.com/",
-        "https://dev.to/",
-        "https://www.reddit.com/r/programming/",
-        "https://www.producthunt.com/",
-        "https://hackernoon.com/",
-        "https://www.freecodecamp.org/news/",
-        "https://css-tricks.com/",
-        "https://www.smashingmagazine.com/",
-        "https://www.infoq.com/"
-      ]
-    },
-    {
-      "category": "AI/ML Resources",
-      "urls": [
-        "https://arxiv.org/list/cs.AI/recent",
-        "https://huggingface.co/",
-        "https://paperswithcode.com/",
-        "https://www.kaggle.com/",
-        "https://openai.com/blog",
-        "https://www.deepmind.com/",
-        "https://www.anthropic.com/news"
-      ]
     }
   ]
 }
