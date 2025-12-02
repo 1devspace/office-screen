@@ -1,7 +1,7 @@
 {
-  "interval": 90,
+  "interval": 15,
   "adaptive_interval": true,
-  "min_interval": 30,
+  "min_interval": 10,
   "max_interval": 180,
   "max_retries": 3,
   "max_browser_restarts": 5,
