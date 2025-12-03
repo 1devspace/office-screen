@@ -47,8 +47,8 @@ A robust, enterprise-grade web automation tool designed for continuous browsing 
 ## 📋 Requirements
 
 - Python 3.7+
-- Chrome browser
-- ChromeDriver (automatically managed by Selenium)
+- Chrome browser (uses your system's installed Chrome browser)
+- ChromeDriver (must be installed separately or will use system ChromeDriver)
 
 ## 🛠️ Installation
 
@@ -66,6 +66,8 @@ pip3 install -r requirements.txt
 
 3. **Install ChromeDriver (if not already installed):**
 
+The application uses your system's Chrome browser. You need ChromeDriver that matches your Chrome version.
+
 **macOS (with Homebrew):**
 ```bash
 brew install chromedriver
@@ -77,7 +79,9 @@ sudo apt-get install chromium-chromedriver
 ```
 
 **Windows:**
-Download from [ChromeDriver website](https://chromedriver.chromium.org/)
+Download from [ChromeDriver website](https://chromedriver.chromium.org/) matching your Chrome version
+
+**Note:** The application will use your system's Chrome browser, not install a separate test browser.
 
 ### Option 2: Package Installation
 ```bash
