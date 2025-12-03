@@ -9,18 +9,13 @@ import random
 import json
 import os
 import psutil
-import threading
-from datetime import datetime, timedelta
+from datetime import datetime
 from urllib.parse import urlparse
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import (
     WebDriverException, TimeoutException, NoSuchWindowException,
-    SessionNotCreatedException, NoSuchElementException
+    SessionNotCreatedException
 )
 
 class OfficeScreen:
@@ -240,7 +235,7 @@ class OfficeScreen:
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.add_argument("--disable-gpu")
-        chrome_options.add_argument("--window-size=1920,1080")
+        # Ensure browser opens in full screen/maximized mode
         chrome_options.add_argument("--start-maximized")
         chrome_options.add_argument("--disable-web-security")
         chrome_options.add_argument("--allow-running-insecure-content")
@@ -261,9 +256,51 @@ class OfficeScreen:
             self.logger.info(f"Using proxy: {proxy}")
         
         try:
+            # Use system Chrome browser (not webdriver-manager)
             self.driver = webdriver.Chrome(options=chrome_options)
             self.driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-            self.logger.info("Chrome browser started successfully")
+            
+            # Wait a moment for browser to fully initialize
+            time.sleep(1)
+            
+            # Maximize window to fill the entire screen
+            try:
+                # First, maximize using Selenium's built-in method
+                self.driver.maximize_window()
+                time.sleep(0.5)  # Give it time to maximize
+                
+                # Get screen dimensions (available screen space)
+                screen_width = self.driver.execute_script("return screen.availWidth;")
+                screen_height = self.driver.execute_script("return screen.availHeight;")
+                
+                # Get current window size and position
+                current_size = self.driver.get_window_size()
+                current_position = self.driver.get_window_position()
+                
+                # Set window to fill entire screen
+                # Position at (0, 0) to ensure it starts from top-left
+                self.driver.set_window_position(0, 0)
+                # Set size to match screen dimensions exactly
+                self.driver.set_window_size(screen_width, screen_height)
+                
+                # Verify it worked
+                final_size = self.driver.get_window_size()
+                final_position = self.driver.get_window_position()
+                
+                self.logger.info(
+                    f"Browser window set to fill screen: {final_size['width']}x{final_size['height']} "
+                    f"at position ({final_position['x']}, {final_position['y']})"
+                )
+                
+            except Exception as e:
+                self.logger.warning(f"Could not set window to full screen: {e}. Trying fallback method.")
+                # Fallback: just maximize
+                try:
+                    self.driver.maximize_window()
+                except Exception as fallback_error:
+                    self.logger.error(f"Fallback maximize also failed: {fallback_error}")
+            
+            self.logger.info("Chrome browser started successfully using system Chrome")
             return True
         except SessionNotCreatedException as e:
             self.logger.error(f"Failed to create browser session: {e}")
