@@ -8,17 +8,24 @@ import os
 
 from setuptools import setup
 
+
 # Read the README file
 def read_readme():
     """Read the README.md file and return its content."""
     with open("README.md", "r", encoding="utf-8") as fh:
         return fh.read()
 
+
 # Read requirements
 def read_requirements():
     """Read the requirements.txt file and return a list of dependencies."""
     with open("requirements.txt", "r", encoding="utf-8") as fh:
-        return [line.strip() for line in fh if line.strip() and not line.startswith("#")]
+        return [
+            line.strip()
+            for line in fh
+            if line.strip() and not line.startswith("#")
+        ]
+
 
 # Get version - simple and clean
 def get_version():

@@ -37,11 +37,11 @@ from selenium.webdriver.chrome.options import Options
 class OfficeScreen:
     """
     Advanced web automation tool for continuous browsing and monitoring.
-    
+
     This class provides functionality for automated web browsing with features
     like error handling, stealth mode, performance monitoring, and adaptive
     behavior.
-    
+
     Attributes:
         driver: Selenium WebDriver instance
         interval: Time to spend on each page (seconds)
@@ -55,20 +55,21 @@ class OfficeScreen:
         config: Configuration dictionary
         urls: List of URLs to visit
         logger: Logger instance for logging
-        
+
     Example:
         >>> from office_screen import OfficeScreen
         >>> office = OfficeScreen()
         >>> office.run()
     """
+
     def __init__(
-        self, 
-        config_file: str = "config/config.json", 
-        urls_file: str = "config/urls/urls.json"
+        self,
+        config_file: str = "config/config.json",
+        urls_file: str = "config/urls/urls.json",
     ) -> None:
         """
         Initialize OfficeScreen instance.
-        
+
         Args:
             config_file: Path to configuration JSON file
             urls_file: Path to URLs JSON file
