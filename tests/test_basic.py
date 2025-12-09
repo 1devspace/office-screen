@@ -36,14 +36,19 @@ class TestOfficeScreenBasic:
             ) as mock_load_urls:
                 mock_load_urls.return_value = []
 
-                with patch("office_screen.OfficeScreen.setup_logging") as mock_setup:
-                    # Create a mock logger
-                    mock_logger = MagicMock()
-                    mock_setup.return_value = None
-                    
+                # Create a mock logger
+                mock_logger = MagicMock()
+                
+                def setup_logging_side_effect(self):
+                    """Side effect that sets logger attribute."""
+                    self.logger = mock_logger
+                
+                with patch(
+                    "office_screen.OfficeScreen.setup_logging",
+                    side_effect=setup_logging_side_effect,
+                    autospec=False,
+                ):
                     office_screen = OfficeScreen()
-                    # Set logger attribute manually since setup_logging is mocked
-                    office_screen.logger = mock_logger
 
                     assert office_screen.interval == 90
                     assert office_screen.adaptive_interval is True
@@ -64,19 +69,24 @@ class TestOfficeScreenBasic:
             config_file = f.name
 
         try:
-            with patch("office_screen.OfficeScreen.setup_logging") as mock_setup:
-                # Create a mock logger
-                mock_logger = MagicMock()
-                mock_setup.return_value = None
-                
+            # Create a mock logger
+            mock_logger = MagicMock()
+            
+            def setup_logging_side_effect(self):
+                """Side effect that sets logger attribute."""
+                self.logger = mock_logger
+            
+            with patch(
+                "office_screen.OfficeScreen.setup_logging",
+                side_effect=setup_logging_side_effect,
+                autospec=False,
+            ):
                 with patch(
                     "office_screen.OfficeScreen.load_urls"
                 ) as mock_load_urls:
                     mock_load_urls.return_value = []
 
                     office_screen = OfficeScreen(config_file)
-                    # Set logger attribute manually since setup_logging is mocked
-                    office_screen.logger = mock_logger
 
                     assert office_screen.interval == 120
                     assert office_screen.adaptive_interval is False
@@ -100,19 +110,24 @@ class TestOfficeScreenBasic:
             urls_file = f.name
 
         try:
-            with patch("office_screen.OfficeScreen.setup_logging") as mock_setup:
-                # Create a mock logger
-                mock_logger = MagicMock()
-                mock_setup.return_value = None
-                
+            # Create a mock logger
+            mock_logger = MagicMock()
+            
+            def setup_logging_side_effect(self):
+                """Side effect that sets logger attribute."""
+                self.logger = mock_logger
+            
+            with patch(
+                "office_screen.OfficeScreen.setup_logging",
+                side_effect=setup_logging_side_effect,
+                autospec=False,
+            ):
                 with patch(
                     "office_screen.OfficeScreen.load_config"
                 ) as mock_load_config:
                     mock_load_config.return_value = {}
 
                     office_screen = OfficeScreen()
-                    # Set logger attribute manually since setup_logging is mocked
-                    office_screen.logger = mock_logger
                     urls = office_screen.load_urls(urls_file)
 
                     assert len(urls) == 2
@@ -123,11 +138,18 @@ class TestOfficeScreenBasic:
 
     def test_validate_url(self):
         """Test URL validation."""
-        with patch("office_screen.OfficeScreen.setup_logging") as mock_setup:
-            # Create a mock logger
-            mock_logger = MagicMock()
-            mock_setup.return_value = None
-            
+        # Create a mock logger
+        mock_logger = MagicMock()
+        
+        def setup_logging_side_effect(self):
+            """Side effect that sets logger attribute."""
+            self.logger = mock_logger
+        
+        with patch(
+            "office_screen.OfficeScreen.setup_logging",
+            side_effect=setup_logging_side_effect,
+            autospec=False,
+        ):
             with patch(
                 "office_screen.OfficeScreen.load_config"
             ) as mock_load_config:
@@ -142,8 +164,6 @@ class TestOfficeScreenBasic:
                     mock_load_urls.return_value = []
 
                     office_screen = OfficeScreen()
-                    # Set logger attribute manually since setup_logging is mocked
-                    office_screen.logger = mock_logger
 
                     # Mock requests for URL validation
                     with patch("office_screen.requests.head") as mock_head:
@@ -163,11 +183,18 @@ class TestOfficeScreenBasic:
 
     def test_adaptive_interval_adjustment(self):
         """Test adaptive interval adjustment based on success rate."""
-        with patch("office_screen.OfficeScreen.setup_logging") as mock_setup:
-            # Create a mock logger
-            mock_logger = MagicMock()
-            mock_setup.return_value = None
-            
+        # Create a mock logger
+        mock_logger = MagicMock()
+        
+        def setup_logging_side_effect(self):
+            """Side effect that sets logger attribute."""
+            self.logger = mock_logger
+        
+        with patch(
+            "office_screen.OfficeScreen.setup_logging",
+            side_effect=setup_logging_side_effect,
+            autospec=False,
+        ):
             with patch(
                 "office_screen.OfficeScreen.load_config"
             ) as mock_load_config:
@@ -183,8 +210,6 @@ class TestOfficeScreenBasic:
                     mock_load_urls.return_value = []
 
                     office_screen = OfficeScreen()
-                    # Set logger attribute manually since setup_logging is mocked
-                    office_screen.logger = mock_logger
                     office_screen.interval = 90
                     office_screen.successful_visits = 4  # 40% success rate (< 50%)
                     office_screen.total_visits = 10
