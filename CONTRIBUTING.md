@@ -36,12 +36,12 @@ By participating in this project, you agree to maintain a respectful and inclusi
 
 3. **Make your changes**
    - Follow the code style (see below)
-   - Add tests for new features
+   - Ensure code quality and follows project style
    - Update documentation as needed
 
-4. **Test your changes**
+4. **Verify your changes**
    ```bash
-   python3 -m pytest tests/
+   python3 -m py_compile office_screen.py
    ```
 
 5. **Commit your changes**
@@ -68,12 +68,12 @@ By participating in this project, you agree to maintain a respectful and inclusi
 - Keep functions focused and small
 - Use meaningful variable names
 
-## Testing
+## Code Quality
 
-- Write tests for all new features
-- Ensure all existing tests pass
-- Aim for good test coverage
-- Use pytest for testing
+- Follow Black code formatting
+- Use type hints where appropriate
+- Ensure code is well-documented
+- Run linting tools before submitting
 
 ## Documentation
 
@@ -98,7 +98,7 @@ By participating in this project, you agree to maintain a respectful and inclusi
 3. Install dependencies:
    ```bash
    pip install -r requirements.txt
-   pip install pytest pytest-cov  # For testing
+   pip install black isort flake8  # For code formatting and linting
    ```
 
 4. Install in development mode:
@@ -115,7 +115,6 @@ Use clear, descriptive commit messages:
 - `Update: what was updated` - for updates
 - `Refactor: what was refactored` - for code refactoring
 - `Docs: what documentation was changed` - for documentation
-- `Test: what tests were added/changed` - for tests
 
 ## Questions?
 
