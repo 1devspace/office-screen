@@ -38,11 +38,11 @@ class TestOfficeScreenBasic:
 
                 # Create a mock logger
                 mock_logger = MagicMock()
-                
+
                 def setup_logging_side_effect(self):
                     """Side effect that sets logger attribute."""
                     self.logger = mock_logger
-                
+
                 with patch(
                     "office_screen.OfficeScreen.setup_logging",
                     side_effect=setup_logging_side_effect,
@@ -112,11 +112,11 @@ class TestOfficeScreenBasic:
         try:
             # Create a mock logger
             mock_logger = MagicMock()
-            
+
             def setup_logging_side_effect(self):
                 """Side effect that sets logger attribute."""
                 self.logger = mock_logger
-            
+
             with patch(
                 "office_screen.OfficeScreen.setup_logging",
                 side_effect=setup_logging_side_effect,
@@ -185,11 +185,11 @@ class TestOfficeScreenBasic:
         """Test adaptive interval adjustment based on success rate."""
         # Create a mock logger
         mock_logger = MagicMock()
-        
+
         def setup_logging_side_effect(self):
             """Side effect that sets logger attribute."""
             self.logger = mock_logger
-        
+
         with patch(
             "office_screen.OfficeScreen.setup_logging",
             side_effect=setup_logging_side_effect,
