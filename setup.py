@@ -3,9 +3,10 @@
 Setup script for office_screen
 """
 
-from setuptools import setup
-import os
 import json
+import os
+
+from setuptools import setup
 
 # Read the README file
 def read_readme():

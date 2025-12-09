@@ -1,10 +1,12 @@
 """Basic tests for OfficeScreen class."""
 
-import pytest
 import json
-import tempfile
 import os
-from unittest.mock import patch, MagicMock
+import tempfile
+from unittest.mock import MagicMock, patch
+
+import pytest
+
 from office_screen import OfficeScreen
 
 

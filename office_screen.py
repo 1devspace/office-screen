@@ -11,24 +11,27 @@ License: MIT
 Version: 2.0.0
 """
 
-import time
+import json
+import logging
+import os
+import random
 import signal
 import sys
-import logging
-import requests
-import random
-import json
-import os
-import psutil
+import time
 from datetime import datetime
-from typing import List, Dict, Tuple, Optional, Any
+from typing import Any, Dict, List, Optional, Tuple
 from urllib.parse import urlparse
+
+import psutil
+import requests
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import (
-    WebDriverException, TimeoutException, NoSuchWindowException,
-    SessionNotCreatedException
+    NoSuchWindowException,
+    SessionNotCreatedException,
+    TimeoutException,
+    WebDriverException,
 )
+from selenium.webdriver.chrome.options import Options
 
 
 class OfficeScreen:
