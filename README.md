@@ -111,6 +111,7 @@ office-screen/
 ├── config/                   # Configuration files
 │   ├── config.json
 │   └── urls/                 # URL files
+├── tests/                    # Test suite
 ├── examples/                 # Usage examples
 └── docs/                     # Documentation
 ```
