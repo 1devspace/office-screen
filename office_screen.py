@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+"""
+office_screen - Advanced Web Automation Tool
+
+A robust, enterprise-grade web automation tool designed for continuous browsing
+and monitoring of multiple websites. Built with Python and Selenium, featuring
+advanced error handling, self-healing capabilities, and comprehensive monitoring.
+
+Author: office_screen Team
+License: MIT
+Version: 2.0.0
+"""
 
 import time
 import signal
@@ -10,6 +21,7 @@ import json
 import os
 import psutil
 from datetime import datetime
+from typing import List, Dict, Tuple, Optional, Any
 from urllib.parse import urlparse
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -18,8 +30,46 @@ from selenium.common.exceptions import (
     SessionNotCreatedException
 )
 
+
 class OfficeScreen:
-    def __init__(self, config_file="config.json"):
+    """
+    Advanced web automation tool for continuous browsing and monitoring.
+    
+    This class provides functionality for automated web browsing with features
+    like error handling, stealth mode, performance monitoring, and adaptive
+    behavior.
+    
+    Attributes:
+        driver: Selenium WebDriver instance
+        interval: Time to spend on each page (seconds)
+        adaptive_interval: Whether to adjust intervals based on success rate
+        max_retries: Maximum retry attempts for failed URLs
+        max_browser_restarts: Maximum browser restart attempts
+        failed_urls: List of URLs that failed during the session
+        successful_visits: Count of successful URL visits
+        total_visits: Total number of URL visit attempts
+        start_time: Session start timestamp
+        config: Configuration dictionary
+        urls: List of URLs to visit
+        logger: Logger instance for logging
+        
+    Example:
+        >>> from office_screen import OfficeScreen
+        >>> office = OfficeScreen()
+        >>> office.run()
+    """
+    def __init__(
+        self, 
+        config_file: str = "config/config.json", 
+        urls_file: str = "config/urls/urls.json"
+    ) -> None:
+        """
+        Initialize OfficeScreen instance.
+        
+        Args:
+            config_file: Path to configuration JSON file
+            urls_file: Path to URLs JSON file
+        """
         self.driver = None
         self.max_retries = 3
         self.browser_restart_count = 0
@@ -49,7 +99,7 @@ class OfficeScreen:
         }
         
         # Load URLs from file
-        self.urls = self.load_urls()
+        self.urls = self.load_urls(urls_file)
         
         self.interval = self.config.get('interval', 90)  # seconds
         self.adaptive_interval = self.config.get('adaptive_interval', True)
@@ -85,15 +135,20 @@ class OfficeScreen:
         
         try:
             if os.path.exists(config_file):
-                with open(config_file, 'r') as f:
+                with open(config_file, 'r', encoding='utf-8') as f:
                     config = json.load(f)
                     default_config.update(config)
                     self.logger.info(f"Loaded configuration from {config_file}")
             else:
                 # Create default config file
-                with open(config_file, 'w') as f:
-                    json.dump(default_config, f, indent=2)
+                os.makedirs(os.path.dirname(config_file), exist_ok=True)
+                with open(config_file, 'w', encoding='utf-8') as f:
+                    json.dump(default_config, f, indent=2, ensure_ascii=False)
                     self.logger.info(f"Created default configuration file: {config_file}")
+        except json.JSONDecodeError as e:
+            self.logger.warning(f"Invalid JSON in config file {config_file}: {e}. Using defaults.")
+        except PermissionError as e:
+            self.logger.warning(f"Permission denied accessing {config_file}: {e}. Using defaults.")
         except Exception as e:
             self.logger.warning(f"Failed to load config: {e}. Using defaults.")
         
@@ -150,7 +205,7 @@ class OfficeScreen:
                 'mb': memory_mb
             })
             
-            # Keep only last 100 memory readings
+            # Keep only last 100 memory readings (efficient slice)
             if len(self.performance_metrics['memory_usage']) > 100:
                 self.performance_metrics['memory_usage'] = self.performance_metrics['memory_usage'][-100:]
             
@@ -512,23 +567,27 @@ class OfficeScreen:
             self.save_performance_metrics()
             self.close_browser()
 
-    def load_urls(self, urls_file="urls.json"):
+    def load_urls(self, urls_file="config/urls/urls.json"):
         """Load URLs from JSON file"""
         try:
             if os.path.exists(urls_file):
-                with open(urls_file, 'r') as f:
+                with open(urls_file, 'r', encoding='utf-8') as f:
                     data = json.load(f)
                     # Store categorized URLs for potential filtering
                     self.categorized_urls = data.get('urls', [])
-                    # Flatten all URLs from all categories
-                    all_urls = []
-                    for category in data.get('urls', []):
-                        all_urls.extend(category.get('urls', []))
+                    # Flatten all URLs from all categories using list comprehension for efficiency
+                    all_urls = [
+                        url for category in data.get('urls', [])
+                        for url in category.get('urls', [])
+                    ]
                     self.logger.info(f"Loaded {len(all_urls)} URLs from {urls_file}")
                     return all_urls
             else:
                 self.logger.warning(f"URLs file {urls_file} not found, using default URLs")
                 return self.get_default_urls()
+        except json.JSONDecodeError as e:
+            self.logger.error(f"Invalid JSON in {urls_file}: {e}. Using default URLs.")
+            return self.get_default_urls()
         except Exception as e:
             self.logger.error(f"Failed to load URLs from {urls_file}: {e}. Using default URLs.")
             return self.get_default_urls()
@@ -564,13 +623,81 @@ class OfficeScreen:
 
 def main():
     """Main entry point"""
+    import argparse
+    
+    parser = argparse.ArgumentParser(
+        description='office_screen - Advanced Web Automation Tool',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  python office_screen.py                                    # Use default config/urls/urls.json
+  python office_screen.py --urls config/urls/urls-business.json  # Use business URLs
+  python office_screen.py --urls config/urls/urls-software.json # Use software URLs
+  python office_screen.py --urls config/urls/urls-tech.json      # Use tech URLs
+  python office_screen.py --urls config/urls/urls-design.json    # Use design URLs
+  python office_screen.py --urls config/urls/urls-news.json      # Use news URLs
+  python office_screen.py --urls config/urls/urls-gaming.json   # Use gaming URLs
+  python office_screen.py --list-urls                            # List available URL files
+
+Available URL files:
+  - config/urls/urls.json (default)
+  - config/urls/urls-business.json
+  - config/urls/urls-software.json
+  - config/urls/urls-tech.json
+  - config/urls/urls-design.json
+  - config/urls/urls-news.json
+  - config/urls/urls-gaming.json
+        """
+    )
+    
+    parser.add_argument(
+        '--urls', '-u',
+        type=str,
+        default='config/urls/urls.json',
+        help='Path to URLs JSON file (default: config/urls/urls.json)'
+    )
+    
+    parser.add_argument(
+        '--config', '-c',
+        type=str,
+        default='config/config.json',
+        help='Path to configuration JSON file (default: config/config.json)'
+    )
+    
+    parser.add_argument(
+        '--list-urls', '-l',
+        action='store_true',
+        help='List all available URL configuration files'
+    )
+    
+    args = parser.parse_args()
+    
+    # List available URL files
+    if args.list_urls:
+            url_files = [
+                'config/urls/urls.json',
+                'config/urls/urls-business.json',
+                'config/urls/urls-software.json',
+                'config/urls/urls-tech.json',
+                'config/urls/urls-design.json',
+                'config/urls/urls-news.json',
+                'config/urls/urls-gaming.json'
+            ]
+            print("\n📋 Available URL Configuration Files:")
+            print("=" * 50)
+            for url_file in url_files:
+                exists = "✓" if os.path.exists(url_file) else "✗"
+                print(f"  {exists} {url_file}")
+            print("\n💡 Usage: python office_screen.py --urls <filename>")
+            return
+    
     try:
-        office_screen = OfficeScreen()
+        office_screen = OfficeScreen(config_file=args.config, urls_file=args.urls)
         office_screen.run()
     except KeyboardInterrupt:
-        print("\nShutdown requested by user.")
+        print("\n\n⚠️  Shutdown requested by user.")
     except Exception as e:
-        print(f"Fatal error: {e}")
+        print(f"\n❌ Fatal error: {e}")
         sys.exit(1)
 
 if __name__ == "__main__":

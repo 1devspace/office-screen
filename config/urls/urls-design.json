@@ -1,0 +1,47 @@
+{
+  "urls": [
+    {
+      "category": "Design Inspiration",
+      "urls": [
+        "https://dribbble.com/",
+        "https://www.behance.net/",
+        "https://www.awwwards.com/",
+        "https://www.siteinspire.com/",
+        "https://www.cssdesignawards.com/",
+        "https://www.designspiration.com/"
+      ]
+    },
+    {
+      "category": "Design Tools",
+      "urls": [
+        "https://www.figma.com/",
+        "https://www.adobe.com/products/photoshop.html",
+        "https://www.sketch.com/",
+        "https://www.invisionapp.com/",
+        "https://www.canva.com/",
+        "https://www.framer.com/"
+      ]
+    },
+    {
+      "category": "Design Resources",
+      "urls": [
+        "https://unsplash.com/",
+        "https://www.pexels.com/",
+        "https://www.flaticon.com/",
+        "https://fonts.google.com/",
+        "https://coolors.co/",
+        "https://www.uplabs.com/"
+      ]
+    },
+    {
+      "category": "Design News & Blogs",
+      "urls": [
+        "https://www.smashingmagazine.com/",
+        "https://www.designernews.co/",
+        "https://www.creativebloq.com/",
+        "https://abduzeedo.com/"
+      ]
+    }
+  ]
+}
+

@@ -40,7 +40,7 @@ dev = [
 ]
 
 [project.scripts]
-office_screen = "office_screen.office_screen:main"
+office_screen = "office_screen:main"
 
 [tool.black]
 line-length = 88

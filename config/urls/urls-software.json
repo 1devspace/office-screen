@@ -1,0 +1,52 @@
+{
+  "urls": [
+    {
+      "category": "Developer Resources",
+      "urls": [
+        "https://github.com/trending",
+        "https://stackoverflow.com/",
+        "https://dev.to/",
+        "https://www.reddit.com/r/programming/",
+        "https://news.ycombinator.com/",
+        "https://lobsters.com/",
+        "https://www.producthunt.com/",
+        "https://www.indiehackers.com/"
+      ]
+    },
+    {
+      "category": "Tech News & Updates",
+      "urls": [
+        "https://www.theverge.com/",
+        "https://techcrunch.com/",
+        "https://www.wired.com/",
+        "https://arstechnica.com/",
+        "https://www.engadget.com/",
+        "https://www.zdnet.com/",
+        "https://venturebeat.com/"
+      ]
+    },
+    {
+      "category": "Software Development Tools",
+      "urls": [
+        "https://www.jetbrains.com/",
+        "https://code.visualstudio.com/",
+        "https://www.docker.com/",
+        "https://kubernetes.io/",
+        "https://www.gitlab.com/",
+        "https://www.atlassian.com/software/jira"
+      ]
+    },
+    {
+      "category": "Documentation & Learning",
+      "urls": [
+        "https://developer.mozilla.org/",
+        "https://docs.python.org/",
+        "https://nodejs.org/en/docs/",
+        "https://react.dev/",
+        "https://docs.docker.com/",
+        "https://kubernetes.io/docs/"
+      ]
+    }
+  ]
+}
+

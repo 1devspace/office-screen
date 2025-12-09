@@ -1,0 +1,51 @@
+{
+  "urls": [
+    {
+      "category": "Technology News",
+      "urls": [
+        "https://www.theverge.com/",
+        "https://techcrunch.com/",
+        "https://www.wired.com/",
+        "https://arstechnica.com/",
+        "https://www.engadget.com/",
+        "https://www.zdnet.com/",
+        "https://www.cnet.com/",
+        "https://www.gizmodo.com/"
+      ]
+    },
+    {
+      "category": "AI & Machine Learning",
+      "urls": [
+        "https://openai.com/",
+        "https://www.anthropic.com/",
+        "https://www.deepmind.com/",
+        "https://huggingface.co/",
+        "https://www.kaggle.com/",
+        "https://paperswithcode.com/",
+        "https://www.fast.ai/"
+      ]
+    },
+    {
+      "category": "Cloud & Infrastructure",
+      "urls": [
+        "https://aws.amazon.com/",
+        "https://cloud.google.com/",
+        "https://azure.microsoft.com/",
+        "https://www.digitalocean.com/",
+        "https://www.heroku.com/",
+        "https://www.netlify.com/"
+      ]
+    },
+    {
+      "category": "Cybersecurity",
+      "urls": [
+        "https://krebsonsecurity.com/",
+        "https://www.schneier.com/",
+        "https://www.darkreading.com/",
+        "https://threatpost.com/",
+        "https://www.bleepingcomputer.com/"
+      ]
+    }
+  ]
+}
+
