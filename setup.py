@@ -3,9 +3,11 @@
 Setup script for office_screen
 """
 
-from setuptools import setup, find_packages
-import os
 import json
+import os
+
+from setuptools import setup
+
 
 # Read the README file
 def read_readme():
@@ -13,22 +15,22 @@ def read_readme():
     with open("README.md", "r", encoding="utf-8") as fh:
         return fh.read()
 
+
 # Read requirements
 def read_requirements():
     """Read the requirements.txt file and return a list of dependencies."""
     with open("requirements.txt", "r", encoding="utf-8") as fh:
-        return [line.strip() for line in fh if line.strip() and not line.startswith("#")]
+        return [
+            line.strip()
+            for line in fh
+            if line.strip() and not line.startswith("#")
+        ]
 
-# Get version from version.json
+
+# Get version - simple and clean
 def get_version():
-    """Get version from version.json file."""
-    try:
-        with open("version.json", "r") as f:
-            version_data = json.load(f)
-            return version_data["version_string"]
-    except (FileNotFoundError, json.JSONDecodeError, KeyError):
-        # Fallback version if version.json is not available
-        return "1.0.0"
+    """Get version - defaults to 2.0.0."""
+    return "2.0.0"
 
 setup(
     name="office_screen",
@@ -39,7 +41,6 @@ setup(
     long_description=read_readme(),
     long_description_content_type="text/markdown",
     url="https://github.com/1devspace/office-screen",
-    packages=find_packages(),
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
@@ -58,9 +59,10 @@ setup(
     install_requires=read_requirements(),
     entry_points={
         "console_scripts": [
-            "office-screen=office_screen.office_screen:main",
+            "office-screen=office_screen:main",
         ],
     },
+    py_modules=["office_screen"],
     include_package_data=True,
     zip_safe=False,
     keywords="web automation selenium browser monitoring",

@@ -1,0 +1,35 @@
+{
+  "urls": [
+    {
+      "category": "Gaming News",
+      "urls": [
+        "https://www.ign.com/",
+        "https://www.gamespot.com/",
+        "https://www.polygon.com/",
+        "https://kotaku.com/",
+        "https://www.pcgamer.com/",
+        "https://www.eurogamer.net/"
+      ]
+    },
+    {
+      "category": "Gaming Platforms",
+      "urls": [
+        "https://store.steampowered.com/",
+        "https://www.epicgames.com/store/",
+        "https://www.xbox.com/",
+        "https://www.playstation.com/",
+        "https://www.nintendo.com/"
+      ]
+    },
+    {
+      "category": "Gaming Communities",
+      "urls": [
+        "https://www.reddit.com/r/gaming/",
+        "https://www.twitch.tv/",
+        "https://www.youtube.com/gaming",
+        "https://discord.com/"
+      ]
+    }
+  ]
+}
+

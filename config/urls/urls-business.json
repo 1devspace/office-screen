@@ -1,0 +1,40 @@
+{
+  "urls": [
+    {
+      "category": "Business News & Finance",
+      "urls": [
+        "https://www.bloomberg.com/",
+        "https://www.reuters.com/business/",
+        "https://www.wsj.com/",
+        "https://www.ft.com/",
+        "https://www.cnbc.com/",
+        "https://www.forbes.com/business/",
+        "https://www.economist.com/",
+        "https://hbr.org/"
+      ]
+    },
+    {
+      "category": "Market Data & Trading",
+      "urls": [
+        "https://finance.yahoo.com/",
+        "https://www.marketwatch.com/",
+        "https://www.investing.com/",
+        "https://www.tradingview.com/",
+        "https://www.coindesk.com/",
+        "https://www.coinbase.com/price"
+      ]
+    },
+    {
+      "category": "Business Tools & Productivity",
+      "urls": [
+        "https://www.salesforce.com/",
+        "https://slack.com/",
+        "https://www.microsoft.com/en-us/microsoft-365",
+        "https://asana.com/",
+        "https://trello.com/",
+        "https://www.notion.so/"
+      ]
+    }
+  ]
+}
+
